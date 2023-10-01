@@ -1,0 +1,179 @@
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 1000px;
+  }
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 50px;
+    width: 600px;
+    height: 600px;
+    background: #f33535;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    align-items: center;
+  }
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .text {
+    color: #29252c;
+    font-size: 48px;
+    font-weight: 700;
+  }
+  
+  .underline {
+    width: 61px;
+    height: 6px;
+    background: #29252c;
+    border-radius: 9px;
+  }
+  
+  .inputs {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+  }
+  
+  .input img {
+    margin: 0px 30px;
+  }
+  
+  .input input {
+    height: 50px;
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #000000;
+    font-size: 19px;
+  }
+  
+  .forgot-password {
+    padding-left: 62px;
+    margin-top: 27px;
+    color: #29252c;
+    font-size: 18px;
+  }
+  
+  .forgot-password span {
+    color: #ffff;
+    cursor: pointer;
+  }
+  
+  span:hover {
+    text-decoration: underline;
+  }
+  
+  .submit-container {
+    display: flex;
+    gap: 30px;
+    width: auto;
+    align-items: center;
+  }
+  .submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #29252c;
+    background: #ffff;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 5px 5px #3e1010;
+  }
+  
+  .submit.active {
+    box-shadow: 5px 10px #3e1010;
+  }
+  
+  .submit:hover {
+    background-color: #49424e;
+    color: #eaeaea;
+  }
+  
+  .logo {
+    width: 75%;
+    border-radius: 10px;
+  }
+  
+  .submit :hover {
+    box-shadow: #000000 8px;
+  }
+  
+  @media (max-width: 600px) {
+    .outer-container {
+      padding: 10px;
+      width: 100%;
+    }
+  
+    .logo-container {
+      width: 70%;
+      text-align: center;
+    }
+  
+    .container {
+      width: 100%;
+      height: auto;
+    }
+  
+    .header {
+      font-size: 100rem;
+    }
+  
+    .inputs {
+      gap: 20px;
+    }
+  
+    .input {
+      width: 55%;
+    }
+  
+    .forgot-password {
+      font-size: 0.8em;
+    }
+  
+    .submit-container {
+      gap: 20px;
+      width: 50%;
+      flex-direction: column;
+      align-self: center;
+    }
+  
+    .submit {
+      width: 85%;
+    }
+  }
+  
