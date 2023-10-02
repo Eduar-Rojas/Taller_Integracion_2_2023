@@ -14,7 +14,6 @@ function App() {
     <div className="col-span-5 row-start-2"><Mensaje/></div>
     <div className="col-span-5 row-span-2 row-start-3"><Promociones/></div>
     <div className="col-span-5 row-span-2 row-start-5"><MasVendido/></div>
-    <div className="col-span-5 row-start-7">??</div>
     <div className="col-span-5 row-start-8"><Footer/></div>
 </div>
     
