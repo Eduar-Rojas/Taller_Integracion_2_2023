@@ -1,4 +1,3 @@
-import React from 'react'
 import sushi from './assets/img/sushi-ejemplo.png'
 
 export const MasVendido = () => {

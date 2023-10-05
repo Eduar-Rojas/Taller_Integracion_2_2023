@@ -1,9 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
-import './Assets/css/LoginRegister.css'
+import '../Components/assets/css/LoginRegister.css'
 import user_icon from '../Components/Assets/img/usuario.png'
 import email_icon from '../Components/Assets/img/email.png'
 import password_icon from '../Components/Assets/img/contraseña.png'
 import logo from '../Components/assets/img/Logo.png'
+import { Link } from 'react-router-dom';
 
 export const LoginRegister = () => {
 
@@ -16,6 +18,9 @@ export const LoginRegister = () => {
         </div>
     <div className='container'>
         <div className='header'>
+            <button className=' font-bold bg-white text-black w-36 h-10 rounded-3xl hover:bg-black hover:text-white'>
+                <Link to="/">VOLVER</Link>
+            </button>
             <div className="text">{action}</div>
             <div className="underline"></div>
         </div>

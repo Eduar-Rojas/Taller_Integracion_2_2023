@@ -1,8 +1,8 @@
-import React from 'react'
 import './Assets/css/Footer.css'
 import fb from './Assets/img/facebook.png'
 import twitter from './Assets/img/twitter.png'
 import instagram from './Assets/img/instagram.png'
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
@@ -19,7 +19,7 @@ export const Footer = () => {
                     <h4>Ayuda</h4>
                 </div>
                 <div className="ct_footer-links_div">
-                    <h4>Contáctanos</h4>
+                    <h4 className='hover:text-white'><Link to="Contacto">Contactanos</Link></h4>
                 </div>
                 <div className="ct_footer-links_div">
                     <h4>Nuestras redes sociales</h4>
