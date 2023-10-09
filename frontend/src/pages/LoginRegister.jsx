@@ -50,8 +50,9 @@ const enviar=async(e)=>{
     <div className='container'>
 
         <div className='header'>
+        <Link to="/">
             <button className=' font-bold bg-white text-black w-36 h-10 rounded-3xl hover:bg-black hover:text-white'>
-                <Link to="/">VOLVER</Link>
+                VOLVER
             </button>
          
             <div className="text">{action}</div>

@@ -1,4 +1,4 @@
-import './Assets/css/Header.css'
+import './assets/css/Header.css'
 import logo from './assets/img/Logo.png'
 import carrito from './assets/img/carrito.svg'
 import { Link } from 'react-router-dom';
@@ -11,10 +11,10 @@ export const Header = () => {
   </div>
   <div className="flex-grow justify-center">
     <ul className="btn-group btn-group-vertical lg:btn-group-horizontal px-1 gap-14 font-bold text-xl flex justify-end items-center ">
-      <li><button className=" px-20 py-2 btn text-white bg-black">Catálogo</button></li>
+      <li><Link to="/catalogo"><button className=" px-20 py-2 btn text-white bg-black">Catálogo</button></Link></li>
       <li><button className="px-20 py-2 btn text-white bg-black">Personaliza tu pedido</button></li>
-      <li><button className="px-20 py-2 btn text-white bg-black"><Link to="/login">Iniciar Sesion</Link></button></li>
-      <li><button className=" px-20 py-2"><img src={carrito} className='w-10'></img></button></li>
+      <li><Link to="/login"><button className="px-20 py-2 btn text-white bg-black">Iniciar Sesion</button></Link></li>
+      <li><Link to="/carro"><button className=" px-20 py-2"><img src={carrito} className='w-10'></img></button></Link></li>
     </ul>
   </div>
 </div>
