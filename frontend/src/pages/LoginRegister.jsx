@@ -54,7 +54,7 @@ const enviar=async(e)=>{
             <button className=' font-bold bg-white text-black w-36 h-10 rounded-3xl hover:bg-black hover:text-white'>
                 VOLVER
             </button>
-         
+        </Link>
             <div className="text">{action}</div>
             <div className="underline"></div>
         </div>
