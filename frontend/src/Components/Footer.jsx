@@ -1,7 +1,7 @@
-import './Assets/css/Footer.css'
-import fb from './Assets/img/facebook.png'
-import twitter from './Assets/img/twitter.png'
-import instagram from './Assets/img/instagram.png'
+import './assets/css/Footer.css'
+import fb from './assets/img/facebook.png'
+import twitter from './assets/img/twitter.png'
+import instagram from './assets/img/instagram.png'
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
@@ -19,7 +19,7 @@ export const Footer = () => {
                     <h4>Ayuda</h4>
                 </div>
                 <div className="ct_footer-links_div">
-                    <h4 className='hover:text-white'><Link to="Contacto">Contactanos</Link></h4>
+                <Link to="/contacto"><h4 className='hover:text-white'>Contactanos</h4></Link>
                 </div>
                 <div className="ct_footer-links_div">
                     <h4>Nuestras redes sociales</h4>
