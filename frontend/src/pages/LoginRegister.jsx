@@ -10,6 +10,7 @@ import Axios  from 'axios'
 export const LoginRegister = () => {
 
     const[action,setAction] = useState("Registrar");
+    
 
 const [formulario,obtenerformulario]=useState({
     nombre:'',
@@ -51,7 +52,7 @@ const enviar=async(e)=>{
 
         <div className='header'>
         <Link to="/">
-            <button className=' font-bold bg-white text-black w-36 h-10 rounded-3xl hover:bg-black hover:text-white'>
+            <button className=' font-bold bg-white text-black w-36 h-10 rounded-3xl hover:bg-[#49424e] hover:text-white'>
                 VOLVER
             </button>
         </Link>
