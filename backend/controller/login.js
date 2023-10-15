@@ -5,7 +5,7 @@ const loginUser = async (email, pass) => {
   try {
     // Consulta SQL para obtener el usuario por su correo electrónico
     const query = `
-      SELECT * FROM "clientes"
+      SELECT * FROM "registro"
       WHERE "email" = $1
     `;
 
@@ -18,9 +18,13 @@ const loginUser = async (email, pass) => {
       const contrasenaValida = await bcrypt.compare(pass, usuario.password);
 
       if (contrasenaValida) {
-        // Contraseña válida, devuelve el usuario autenticado
-        console.log('Usuario autenticado exitosamente');
-        return usuario;
+        if (usuario.administrador === 1) {
+          console.log('El administrador ha podido iniciar sesion exitosamente');
+          return usuario;
+        } else {
+          console.log('El usuario ha podido iniciar sesion exitosamente');
+          return usuario;
+        }
       } else {
         // Contraseña incorrecta
         console.log('Contraseña incorrecta');

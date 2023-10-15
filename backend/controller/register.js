@@ -4,7 +4,7 @@ const registerUser = async (user, email, pass) => {
   try {
    
     // Consulta para ver si el correo o el nombre del usuario existen en la base de datos
-    const usuarioExistente = await db.oneOrNone('SELECT * FROM clientes WHERE email = $1 OR id_usuario = $2', [
+    const usuarioExistente = await db.oneOrNone('SELECT * FROM registro WHERE email = $1 OR id_usuario = $2', [
       email,
       user,
     ]);
@@ -27,11 +27,11 @@ const registerUser = async (user, email, pass) => {
     const administrador = 0;
 
     // Parámetros de la consulta
-    const values = [user, email, hashedPassword];
+    const values = [user, email, hashedPassword, administrador];
 
     const query = `
-    INSERT INTO "clientes" ("id_usuario", "email", "password")
-    VALUES ($1, $2, $3)
+    INSERT INTO "registro" ("id_usuario", "email", "password", administrador)
+    VALUES ($1, $2, $3, $4)
   `;
 
 
