@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import '../Components/assets/css/LoginRegister.css'
 import user_icon from '../Components/assets/img/usuario.png'
 import email_icon from '../Components/assets/img/email.png'
