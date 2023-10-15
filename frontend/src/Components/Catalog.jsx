@@ -10,7 +10,18 @@ export const Catalog = () => {
     <h2 className="card-title font-bold">Sushi</h2>
     <p className='font-light'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
     <div className="card-actions">
-      <button className="btn text-white bg-black">Añadir al carrito</button>
+      <button className="btn text-white bg-black" onClick={()=>document.getElementById('my_modal_1').showModal()}>Añadir al carrito</button>
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box bg-rojito">
+          <h3 className="font-bold text-lg">Lorem</h3>
+          <p className="py-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn bg-black text-white">Cerrar</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   </div>
 </div>

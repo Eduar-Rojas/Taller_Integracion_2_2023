@@ -4,7 +4,7 @@ import { Footer } from "../Components/Footer";
 
 function Catalogo() {
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-5 gap-4 bg-[#161a1d]">
       <div className="col-span-5">
         <Header />
       </div>
