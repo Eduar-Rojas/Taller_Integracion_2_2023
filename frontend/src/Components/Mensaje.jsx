@@ -6,9 +6,11 @@ export const Mensaje = () =>{
         <div className='flex items-center text-3xl font-bold text-white'>
             ¿QUIERES ARMAR TU PROPIO SUSHI?
         </div>
+        <Link to="/personalizarSushi">
         <div className='flex items-center text-3xl btn bg-black'>
-            <Link to="/personalizarSushi"><button><p className='text-white'>CLICK AQUÍ!!</p></button></Link>
+            <button><p className='text-white'>CLICK AQUÍ!!</p></button>
         </div>
+        </Link>
         
     </div>
   )
