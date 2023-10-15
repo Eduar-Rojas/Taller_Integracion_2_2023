@@ -4,6 +4,8 @@ import  {Principal}  from './pages/Principal'
 import ContacUs_form from './pages/ContacUs_form'
 import Carro from './pages/Carro'
 import Catalogo from './pages/Catalogo'
+import SushiBuild from './pages/SushiBuild';
+import SobreNosotros from './pages/SobreNosotros';
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path="/contacto" element={<ContacUs_form />} />
         <Route path="/carro" element={<Carro />} />
         <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/personalizarSushi" element={<SushiBuild />} />
+        <Route path="/nosotros" element={<SobreNosotros />} />
       </Routes>
     </Router>
   )

@@ -10,7 +10,7 @@ export const Footer = () => {
         <div className="ct_footer section-padding">
             <div className="ct_footer-links">
                 <div className="ct_footer-links_div">
-                    <h4>Sobre nosotros</h4> 
+                    <Link to="/nosotros"><h4 className='hover:text-white'>Sobre nosotros</h4></Link>
                 </div>
                 <div className="ct_footer-links_div">
                     <h4>Recursos</h4>
@@ -24,9 +24,9 @@ export const Footer = () => {
                 <div className="ct_footer-links_div">
                     <h4>Nuestras redes sociales</h4>
                     <div className="socialmedia">
-                        <p><img src={fb} alt=''/></p>
-                        <p><img src={twitter} alt=''/></p>
-                        <p><img src={instagram} alt=''/></p>
+                        <a href='https://www.facebook.com/'><p><img src={fb} alt=''/></p></a>
+                        <a href='https://www.twitter.com/'><p><img src={twitter} alt=''/></p></a>
+                        <a href='https://www.instagram.com/'><p><img src={instagram} alt=''/></p></a>
                     </div>
                 </div>
             </div>
