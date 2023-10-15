@@ -23,6 +23,9 @@ const registerUser = async (user, email, pass) => {
     // Se genera el hash de la contraseña, la cual toma como argumentos la contreña y el valor de rondas de hashing
     const hashedPassword = await bcrypt.hash(pass, saltRounds);
 
+    // Valor para la columna administrador
+    const administrador = 0;
+
     // Parámetros de la consulta
     const values = [user, email, hashedPassword];
 
