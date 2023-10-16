@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { LoginRegister } from './pages/LoginRegister'
+import  LoginRegister  from './pages/LoginRegister'
 import  {Principal}  from './pages/Principal'
 import ContacUs_form from './pages/ContacUs_form'
 import Carro from './pages/Carro'
