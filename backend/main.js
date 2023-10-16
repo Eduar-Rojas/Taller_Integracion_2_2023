@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const { registerUser } = require('./controller/register')
 const { loginUser } = require('./controller/login');
+const { getVentasPorDiaQuery } = require('./query/queries_ventas'); 
+const { db } = require('./db/db'); // Importa la instancia de cliente de db.js
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
