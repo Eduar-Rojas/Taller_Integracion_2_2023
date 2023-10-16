@@ -124,7 +124,7 @@ const btoninput=(e)=>{
             }
         } catch (error) {
 
-            toast.success('Error en el inicio de sesión', {//mensaje de alerta en la parte superior derecha 
+            toast.error('Error en el inicio de sesión', {//mensaje de alerta en la parte superior derecha 
                 position: 'top-right', 
                 autoClose: 5000, // dura 5segundos
               });
