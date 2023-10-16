@@ -54,7 +54,24 @@ app.post('/login', async (req, res) => {
 });
 
 
+app.get('/api/ventas-por-dia', async (req, res) => {
+  try {
+    const result = await db.many(getVentasPorDiaQuery); // Utiliza la consulta importada
 
+    // Verifica si result contiene datos
+    if (result) {
+      // Accede directamente a los datos
+      console.log(result);
+      res.json(result);
+    } else {
+      console.error('La consulta no retornó datos válidos.');
+      res.status(500).json({ error: 'Error al obtener datos de ventas' });
+    }
+  } catch (error) {
+    console.error('Error al obtener datos de ventas:', error);
+    res.status(500).json({ error: 'Error al obtener datos de ventas' });
+  }
+});
 
 
 const port = process.env.PORT || 3000;
