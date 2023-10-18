@@ -57,25 +57,25 @@ const SushiBuild = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="font-lato grid grid-cols-2 gap-x-8  bg-black"> {/* Contenedor */}
       {/*Header y titulo de la pag */}
       <div className="col-span-2">
         <Header />
       </div>
 
-      <div className="col-span-2 row-start-2 flex justify-center py-4">
+      <div className="col-span-2 row-start-2 flex justify-center py-4">{/* Hijo */}
         <h1 className="md:text-4xl lg:text-6xl font-bold flex items-start text-white">
           PERSONALIZA TU SUSHI
         </h1>
       </div>
 
-      {/*Formulario build sushi */}
-      <div className="row-start-3 pl-20 border-solid border-2 border-rojito p-">
-        <h2 className="md:text-2xl lg:text-4xl pb-4 text-white">
-          ¿Frío o frito?
+      {/*Contenedor hijo: Contiene formulario*/}
+      <div className="row-start-3 place-self-end mb-24 p-8 border-solid border-2 rounded-r-lg border-rojito ">{/* Hijo */}
+        <h2 className="sm:text-xl md:text-2xl lg:text-2xl text-white mb-4">
+          Seleccione sushi frito o frío
         </h2>
         <form action="">
-          <div className="space-x-4">
+          <div className="space-x-4 text-center mb-4">
             <button
               className={`btn text-white ${
                 selected === 1 ? "bg-rojito hover:bg-rojito" : "bg-default"
@@ -98,8 +98,8 @@ const SushiBuild = () => {
           {renderWrapSelection}
 
           <section>
-            <h2 className="py-4 text-white">Seleccione proteina</h2>
-            <select className="select select-bordered w-full max-w-xs text-white">
+            <h2 className="text-white sm:text-xl md:text-2xl lg:text-2xl">Seleccione proteina</h2>
+            <select className="select select-bordered w-full text-white mb-4">
               <option disabled selected>
                 Seleccione la proteina
               </option>
@@ -111,8 +111,8 @@ const SushiBuild = () => {
           </section>
 
           <section>
-            <h2 className="text-white">Seleccione primer relleno</h2>
-            <select className="select select-bordered w-full max-w-xs text-white">
+            <h2 className="text-white sm:text-xl md:text-2xl lg:text-2xl">Seleccione primer relleno</h2>
+            <select className="select select-bordered w-full text-white mb-4">
               <option disabled selected>
                 Seleccione ingrediente
               </option>
@@ -123,8 +123,8 @@ const SushiBuild = () => {
           </section>
 
           <section>
-            <h2 className="text-white">Seleccione segundo relleno</h2>
-            <select className="select select-bordered w-full max-w-xs text-white">
+            <h2 className="text-white sm:text-xl md:text-2xl lg:text-2xl">Seleccione segundo relleno</h2>
+            <select className="select select-bordered w-full text-white mb-4">
               <option disabled selected>
                 Seleccione ingrediente
               </option>
@@ -136,7 +136,7 @@ const SushiBuild = () => {
         </form>
       </div>
 
-      <div className="row-start-3">
+      <div className="row-start-3 place-self-start mb-24 p-8 border-solid border-2 rounded-l-lg border-rojito">{/* Hijo */}
         <h2>Aqui va el imagen al selecionar algo + descripcion</h2>
       </div>
 
