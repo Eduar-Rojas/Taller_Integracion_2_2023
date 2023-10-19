@@ -57,7 +57,7 @@ const SushiBuild = () => {
   };
 
   return (
-    <div className="font-lato grid grid-cols-2 gap-x-8  bg-black"> {/* Contenedor */}
+    <div className="font-lato grid grid-cols-2 gap-x-8 bg-black"> {/* Contenedor */}
       {/*Header y titulo de la pag */}
       <div className="col-span-2">
         <Header />
@@ -70,12 +70,12 @@ const SushiBuild = () => {
       </div>
 
       {/*Contenedor hijo: Contiene formulario*/}
-      <div className="row-start-3 place-self-end mb-24 p-8 border-solid border-2 rounded-r-lg border-rojito ">{/* Hijo */}
+      <div className="row-start-3 place-self-end p-8 border-solid border-2 rounded-r-lg border-rojito shadow-neon">{/* Hijo */}
         <h2 className="sm:text-xl md:text-2xl lg:text-2xl text-white mb-4">
           Seleccione sushi frito o frío
         </h2>
         <form action="">
-          <div className="space-x-4 text-center mb-4">
+          <div className="flex justify-evenly mb-4">
             <button
               className={`btn text-white ${
                 selected === 1 ? "bg-rojito hover:bg-rojito" : "bg-default"
@@ -136,11 +136,11 @@ const SushiBuild = () => {
         </form>
       </div>
 
-      <div className="row-start-3 place-self-start mb-24 p-8 border-solid border-2 rounded-l-lg border-rojito">{/* Hijo */}
+      <div className="row-start-3 place-self-start p-8 border-solid border-2 rounded-l-lg border-rojito">{/* Hijo */}
         <h2>Aqui va el imagen al selecionar algo + descripcion</h2>
       </div>
 
-      <div className="col-span-2">
+      <div className="col-span-2 mt-24">
         <Footer />
       </div>
     </div>
