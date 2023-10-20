@@ -1,4 +1,4 @@
-const { db } = require('../db/db'); // Importa la instancia de cliente de db.js
+const  db  = require('../db/db'); // Importa la instancia de cliente de db.js
 const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
 const registerUser = async (user, email, pass) => {
   try {

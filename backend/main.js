@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const { registerUser } = require('./controller/register')
 const { loginUser } = require('./controller/login');
+const jwt = require('jsonwebtoken');
+
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
@@ -18,8 +20,13 @@ app.post('/registro', async (req, res) => {
     }
 
     await registerUser(user, email, pass);
-    res.status(201).send('Usuario registrado correctamente');
+    // constante token que servira para contener la información del usuario identificado
+    const token = jwt.sign({ id_usuario: user }, 'secreto_jwt'); // 'secreto_jwt' es una clave secreta, asegúrate de guardarla de forma segura
+
+    res.status(201).json({ message: 'Usuario registrado correctamente', token });
+
     console.log('Usuario registrado exitosamente');
+
   } catch (error) {
     console.error('Error al registrar al usuario:', error);
 
@@ -41,12 +48,19 @@ app.post('/login', async (req, res) => {
     const usuario = await loginUser(email, pass);
 
     if (usuario) {
+    // constante token que servira para contener la información del usuario identificado
+      const token = jwt.sign({ id_usuario: usuario.id_usuario }, 'secreto_jwt'); // 'secreto_jwt' es la misma clave secreta que usaste para firmar el token durante el registro
+
       console.log('Su Inicio de sesión ha sido exitoso');
-      res.status(200).send('Su Inicio de sesión ha sido exitoso');
+      res.status(200).send({message: 'Su Inicio de sesión ha sido exitoso', token});
+
+
     } else {
       console.log('Correo o contraseña incorrectos.');
       res.status(400).send('Correo o contraseña incorrectos.');
     }
+
+
   } catch (error) {
     console.error('Error al autenticar al usuario:', error);
     res.status(500).send('Error al procesar la solicitud');
@@ -65,17 +79,3 @@ app.listen(port, () => {
 
 
 
-
-//  Especifico la consulta SQL
-//const sqlQuery = 'SELECT * FROM clientes'
-
-//  Uso la consulta a la base de datos
-//db.query(sqlQuery)
-  //.then(data => {
-  // Maneja los resultados aquí
-    //console.log('Resultados de la consulta:', data)
-  //})
-  //.catch(error => {
-  // Maneja los errores aquí
-    //console.error('Error al ejecutar la consulta:', error)
-  //})

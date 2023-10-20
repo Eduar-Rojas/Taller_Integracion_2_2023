@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
+import Axios from 'axios'
 import './assets/css/Form_LR.css'
 import user_icon from './assets/img/usuario.png'
 import email_icon from './assets/img/email.png'
 import password_icon from './assets/img/contraseña.png'
 import logo from './assets/img/Logo.png'
 import { Link } from 'react-router-dom';
-import Axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
@@ -33,7 +33,15 @@ const [formulario,obtenerformulario]=useState({
     user:'',
     email:'',
     pass:'',
-})
+});
+
+// se crea la variable token y setToken para actualizar su estado
+const [token, setToken] = useState(localStorage.getItem('token') || '');
+
+useEffect(() => {
+// Se almacena el token en el estado cuando cambia en localStorage
+  setToken(localStorage.getItem('token') || '');
+}, []);
 
 
 
@@ -95,6 +103,8 @@ const btoninput=(e)=>{
                 position: 'top-right', 
                 autoClose: 5000, // dura 5segundos
               });
+            localStorage.setItem('token', respuesta.data.token); // Almacena el token en localStorage
+            setToken(respuesta.data.token); // actualiza el estado del token y se envia de vuelta al cliente(frontend)
             }
        
     }catch(error){
@@ -117,6 +127,8 @@ const btoninput=(e)=>{
                     position: 'top-right', 
                     autoClose: 5000, // dura 5segundos
                   });
+                  localStorage.setItem('token', respuesta.data.token);
+                  setToken(respuesta.data.token);
                   console.log('Inicio de sesión exitoso');
                   // Aquí podrías redirigir al usuario a otra página después del inicio de sesión exitoso
                 

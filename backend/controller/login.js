@@ -1,4 +1,4 @@
-const { db } = require('../db/db'); // Importa la instancia de cliente de db.js
+const  db = require('../db/db'); // Importa la instancia de cliente de db.js
 const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
 
 const loginUser = async (email, pass) => {
@@ -35,6 +35,7 @@ const loginUser = async (email, pass) => {
       console.log('Usuario no encontrado');
       return null;
     }
+
   } catch (error) {
     console.error('Error al autenticar al usuario:', error);
     throw error;

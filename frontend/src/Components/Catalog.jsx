@@ -1,5 +1,5 @@
+import React,{useState, useEffect} from "react";
 import sushi_img from './assets/img/sushicatalog.png'
-import { useState } from 'react'
 
 export const Catalog = () => { 
 

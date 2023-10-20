@@ -1,3 +1,4 @@
+import React,{useState, useEffect} from "react";
 import { Catalog } from "../Components/Catalog";
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
