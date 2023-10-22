@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
+import cloudinary from 'cloudinary-core';
+
+
+const cloudinaryCore = new cloudinary.Cloudinary({ cloud_name: 'tu-nombre-de-cloudinary' });
 
 class SushiBuild extends Component {
   constructor(props) {
@@ -13,8 +17,15 @@ class SushiBuild extends Component {
       ingredient1: "",
       ingredient2: "",
       selected: null,
+      showtext:"",
     };
   }
+
+
+  handleProteinChange = (event) => {
+    this.setState({ protein: event.target.value });
+  };
+  
 
   handleTemperatureChange = (event) => {
     this.setState({ temperature: event.target.value });
@@ -103,16 +114,17 @@ class SushiBuild extends Component {
 
             <section>
               <h2 className="text-white sm:text-xl md:text-2xl lg:text-2xl">Seleccione proteina</h2>
-              <select className="select select-bordered w-full text-white mb-4">
+              <select className="select select-bordered w-full text-white mb-4"  value={this.state.protein} onChange={this.handleProteinChange}>
                 <option disabled selected>
                   Seleccione la proteina
                 </option>
-                <option>Kanikama</option>
-                <option>Pollo</option>
-                <option value="">Salmon</option>
-                <option value="">Camaron</option>
+                <option value="https://res.cloudinary.com/duqrm1tgk/image/upload/v1697418411/kammi_z7gr4z.jpg">Kanikama</option>
+              <option value="https://res.cloudinary.com/duqrm1tgk/image/upload/v1697418993/maxresdefault_q5anix.jpg">Pollo</option>
+              <option value="https://res.cloudinary.com/duqrm1tgk/image/upload/v1697419200/salmon-sushi-3_b5fk4p.jpg">Salmon</option>
+              <option value="https://res.cloudinary.com/duqrm1tgk/image/upload/v1697419495/ebi-camaron-roll_ik9yqf.jpg">Camaron</option>
               </select>
             </section>
+
 
             <section>
               <h2 className="text-white sm:text-xl md:text-2xl lg:text-2xl">Seleccione primer relleno</h2>
@@ -142,6 +154,12 @@ class SushiBuild extends Component {
 
         <div className="row-start-3 place-self-start p-8 border-solid border-2 rounded-l-lg border-rojito">
           <h2>Aqui va el imagen al seleccionar algo + descripción</h2>
+
+<div> {this.state.protein && (
+          <img src={this.state.protein} alt="Seleccion de proteina"
+          style={{ width: '200px', height: '150px',objectFit: 'fill' }} />
+        )}  </div>
+
         </div>
 
         <div className="col-span-2 mt-24">
