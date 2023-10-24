@@ -8,7 +8,7 @@ const Profile_Body = () => {
   useEffect(() => {
     const fetchUserData = async() => {
       try{
-        const respuesta=await axios.post('http://localhost:3000/datos-usuario',{
+        const respuesta=await axios.get('http://localhost:3000/datos-usuario',{
           headers:{
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
