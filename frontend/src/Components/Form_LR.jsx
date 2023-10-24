@@ -10,8 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
 
- 
-
 
 export const Form_LR = () => {
 
@@ -35,14 +33,9 @@ const [formulario,obtenerformulario]=useState({
     pass:'',
 });
 
-// se crea la variable token y setToken para actualizar su estado
+// se crea la variable token y una funcion "setToken" para actualizar su estado
 const [token, setToken] = useState(localStorage.getItem('token') || '');
-
-useEffect(() => {
-// Se almacena el token en el estado cuando cambia en localStorage
-  setToken(localStorage.getItem('token') || '');
-}, []);
-
+// useState recibe el argumento que esta guardado en el localStorage
 
 
 /*la funcion btoninput hace que cunado el usuario ingresa sus datos,va a estar actualizando el valor del campo
@@ -103,8 +96,6 @@ const btoninput=(e)=>{
                 position: 'top-right', 
                 autoClose: 5000, // dura 5segundos
               });
-            localStorage.setItem('token', respuesta.data.token); // Almacena el token en localStorage
-            setToken(respuesta.data.token); // actualiza el estado del token y se envia de vuelta al cliente(frontend)
             }
        
     }catch(error){
@@ -127,13 +118,11 @@ const btoninput=(e)=>{
                     position: 'top-right', 
                     autoClose: 5000, // dura 5segundos
                   });
-                  localStorage.setItem('token', respuesta.data.token);
-                  setToken(respuesta.data.token);
+                  localStorage.setItem('token', respuesta.data.token); // Almacena el token en localStorage del navegador
+                  setToken(respuesta.data.token); // actualiza el estado del token y se envia de vuelta al cliente(frontend)
                   setUserData(respuesta.data.usuario);
                   console.log('Inicio de sesión exitoso');
                   // Aquí podrías redirigir al usuario a otra página después del inicio de sesión exitoso
-                
-            
             }
         } catch (error) {
 

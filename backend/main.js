@@ -21,7 +21,7 @@ app.post('/registro', async (req, res) => {
 
     await registerUser(user, email, pass);
     // constante token que servira para contener la información del usuario identificado
-    const token = jwt.sign({ id_usuario: user }, 'secreto_jwt'); // 'secreto_jwt' es una clave secreta, asegúrate de guardarla de forma segura
+    const token = jwt.sign({ id_usuario: user }, 'Secreto_XD'); // 'Secreto_XD' es una clave secreta, asegúrate de guardarla de forma segura
 
     res.status(201).json({ message: 'Usuario registrado correctamente', token });
 
@@ -49,7 +49,7 @@ app.post('/login', async (req, res) => {
 
     if (usuario) {
     // constante token que servira para contener la información del usuario identificado
-      const token = jwt.sign({ id_usuario: usuario.id_usuario , email: usuario.email }, 'secreto_jwt'); // 'secreto_jwt' es la misma clave secreta que usaste para firmar el token durante el registro
+      const token = jwt.sign({ id_usuario: usuario.id_usuario , email: usuario.email }, 'Secreto_XD'); // 'Secreto_XD' es la misma clave secreta que usaste para firmar el token durante el registro
       console.log('Su Inicio de sesión ha sido exitoso');
       res.status(200).send({message: 'Su Inicio de sesión ha sido exitoso', token, usuario: {id_usuario: usuario.id_usuario , email: usuario.email} });
 
@@ -67,18 +67,23 @@ app.post('/login', async (req, res) => {
 });
 
 
-const VerificarToken = (req, res, next) => {
-  const tokenHeader = req.header('Authorization');
+const VerificarToken = (req, res, next) => {   // 
+  const tokenHeader = req.header('Authorization');  // se obtiene el token del encabezado 'Authorization'
 
-  if(!tokenHeader){
+  if(!tokenHeader){      // si no se encuentra el token devuelve el siguiente error 
     return res.status(401).json({message:'Accesso denegado'});
   }
 
   try{
-    const token = tokenHeader.replace('Bearer ', '');
-    const decodedToken = jwt.verify(token, 'secreto_jwt');
-    req.user = decodedToken;
-    next();  
+
+    const token = tokenHeader.replace('Bearer ', ''); // se extrae el token de 'Authorization' pero se elimina el prefijo 'Bearer' 
+
+    const decodedToken = jwt.verify(token, 'Secreto_XD'); // se ultiliza la bliblioteca "jsonwebtoken" para verificar el token 
+     // con la clave secreta "Secreto_XD", si es valido, este puede ser decodificado
+
+    req.user = decodedToken; // la informacion del usuario decodificada se agrega al objeto ("req.user") para que este disponible 
+    // para las rutas
+    next();  // en caso de que el token no sea valido, se llama a next() para manejar la solicitud como no autorizada
   }catch(error){
     res.status(403).json({message:'Token invalido'});
   }
@@ -86,12 +91,16 @@ const VerificarToken = (req, res, next) => {
 
 
 
-app.get('/datos-usuario', VerificarToken,  (req,res) => {
+app.get('/datos-usuario', VerificarToken,  (req,res) => {  // primero que todo se define la ruta "get" para solicitar los datos
+// lo cual antes se ejecutara primero la funcion "VerificarToken" antes de que llegue a la funcion de manejo de la ruta
 
-  if (!req.user || !req.user.id_usuario || !req.user.email) {
+
+  if (!req.user || !req.user.id_usuario || !req.user.email) { // se asigna una condicion, la cual es que si no existe "req.user"
+  //  (informacion decodificada del usuario) o no existe "id_usuario" o "email", arrojara el error (en este caso '401')
     return res.status(401).json({ message: 'Acceso no autorizado' });
   }
 
+//  se crea el objeto "usuario" el cual tendra las propiedades "id_usuario" y "email" del objeto "req.user"
   const usuario= {
     id_usuario: req.user.id_usuario,
     email : req.user.email,
