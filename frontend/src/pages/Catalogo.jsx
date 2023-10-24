@@ -5,7 +5,7 @@ import { Footer } from "../Components/Footer";
 
 function Catalogo() {
   return (
-    <div className="grid grid-cols-5 gap-4 bg-[#161a1d]">
+    <div className="grid grid-cols-5 gap-4 bg-black">
       <div className="col-span-5">
         <Header />
       </div>
@@ -14,7 +14,7 @@ function Catalogo() {
         <div className="join gap-1 px-4">
           <div>
             <div>
-              <input className="input input-bordered join-item" placeholder="Buscar" style={{ height: '3rem' }}/>
+              <input className="input input-bordered join-item text-black" placeholder="Buscar" style={{ height: '3rem' }}/>
             </div>
           </div>
           <select className="select select-bordered join-item text-white font-medium">
@@ -26,7 +26,7 @@ function Catalogo() {
             <option>Aaaaa</option>
           </select>
           <div className="indicator">
-            <button className="btn join-item bg-black text-white hover:bg-rojito">Buscar</button>
+            <button className="btn join-item text-white hover:bg-rojito">Buscar</button>
           </div>
         </div>
       </div>

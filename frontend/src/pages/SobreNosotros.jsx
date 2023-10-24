@@ -4,7 +4,7 @@ import {Footer} from '../Components/Footer'
 const SobreNosotros = () => {
 
     return(
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-4 bg-black">
         <div ><Header/></div>
         <div className='justify-self-center' >
             <h1 className='md:text-4xl lg:text-6xl font-bold flex items-start text-white'>NOSOTROS</h1>

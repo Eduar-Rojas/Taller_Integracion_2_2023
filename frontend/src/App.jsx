@@ -6,6 +6,7 @@ import Carro from './pages/Carro'
 import Catalogo from './pages/Catalogo'
 import SushiBuild from './pages/SushiBuild';
 import SobreNosotros from './pages/SobreNosotros';
+import Profile from './pages/Profile'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/personalizarSushi" element={<SushiBuild />} />
         <Route path="/nosotros" element={<SobreNosotros />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   )

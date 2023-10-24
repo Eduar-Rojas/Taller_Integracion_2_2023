@@ -15,7 +15,7 @@ import validator from 'validator';
 
 export const Form_LR = () => {
 
-  
+    const [userData,setUserData] = useState(null); 
     const[action,setAction] = useState("Registrar");
 
 
@@ -129,6 +129,7 @@ const btoninput=(e)=>{
                   });
                   localStorage.setItem('token', respuesta.data.token);
                   setToken(respuesta.data.token);
+                  setUserData(respuesta.data.usuario);
                   console.log('Inicio de sesión exitoso');
                   // Aquí podrías redirigir al usuario a otra página después del inicio de sesión exitoso
                 

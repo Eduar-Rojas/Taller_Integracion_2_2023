@@ -21,6 +21,7 @@ const loginUser = async (email, pass) => {
         if (usuario.administrador === 1) {
           console.log('El administrador ha podido iniciar sesion exitosamente');
           return usuario;
+          res.redirect('/otra-pagina');
         } else {
           console.log('El usuario ha podido iniciar sesion exitosamente');
           return usuario;

@@ -4,7 +4,7 @@ import { Form_LR } from "../Components/Form_LR";
 
 const LoginRegister = () => {
   return (
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-1 bg-black">
         <div className="col-span-1"><Header/></div>
         <div className="col-span-1"><Form_LR/></div>
         <div className="col-span-1"><Footer/></div>

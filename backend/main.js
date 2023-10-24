@@ -49,10 +49,9 @@ app.post('/login', async (req, res) => {
 
     if (usuario) {
     // constante token que servira para contener la información del usuario identificado
-      const token = jwt.sign({ id_usuario: usuario.id_usuario }, 'secreto_jwt'); // 'secreto_jwt' es la misma clave secreta que usaste para firmar el token durante el registro
-
+      const token = jwt.sign({ id_usuario: usuario.id_usuario , email: usuario.email }, 'secreto_jwt'); // 'secreto_jwt' es la misma clave secreta que usaste para firmar el token durante el registro
       console.log('Su Inicio de sesión ha sido exitoso');
-      res.status(200).send({message: 'Su Inicio de sesión ha sido exitoso', token});
+      res.status(200).send({message: 'Su Inicio de sesión ha sido exitoso', token, usuario: {id_usuario: usuario.id_usuario , email: usuario.email} });
 
 
     } else {
@@ -68,14 +67,37 @@ app.post('/login', async (req, res) => {
 });
 
 
+const VerificarToken = (req, res, next) => {
+  const token = req.header('Authorization');
+
+  if(!token){
+    return res.status(401).json({message:'Accesso denegado'});
+  }
+
+  try{
+    const zzz = jwt.verify(token , 'secreto_jwt' );
+    req.user = zzz;
+    next();  
+  }catch(error){
+    res.status(403).json({message:'Token invalido'});
+  }
+};
 
 
+
+app.get('/datos-usuario', (req,res) => {
+
+  const usuario= {
+    id_usuario: req.user.id_usuario,
+    email : req.user.email,
+  };
+
+  res.status(200).json({usuario});
+});
+
+// })
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor funcionando en el puerto ${port}`);
 });
-
-
-
-
