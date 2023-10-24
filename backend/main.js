@@ -68,15 +68,16 @@ app.post('/login', async (req, res) => {
 
 
 const VerificarToken = (req, res, next) => {
-  const token = req.header('Authorization');
+  const tokenHeader = req.header('Authorization');
 
-  if(!token){
+  if(!tokenHeader){
     return res.status(401).json({message:'Accesso denegado'});
   }
 
   try{
-    const zzz = jwt.verify(token , 'secreto_jwt' );
-    req.user = zzz;
+    const token = tokenHeader.replace('Bearer ', '');
+    const decodedToken = jwt.verify(token, 'secreto_jwt');
+    req.user = decodedToken;
     next();  
   }catch(error){
     res.status(403).json({message:'Token invalido'});
@@ -85,7 +86,11 @@ const VerificarToken = (req, res, next) => {
 
 
 
-app.get('/datos-usuario', (req,res) => {
+app.get('/datos-usuario', VerificarToken,  (req,res) => {
+
+  if (!req.user || !req.user.id_usuario || !req.user.email) {
+    return res.status(401).json({ message: 'Acceso no autorizado' });
+  }
 
   const usuario= {
     id_usuario: req.user.id_usuario,
