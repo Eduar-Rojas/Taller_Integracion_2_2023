@@ -24,7 +24,6 @@ const Profile_Body = () => {
   return (
     <main>
 
-
       <div className="grid grid-cols-2 grid-rows-1 gap-4 justify-items-stretch mb-64">
 
         <div className="justify-self-end">
@@ -68,7 +67,7 @@ const Profile_Body = () => {
         </div>
 
         <div  className="justify-self-start text-white ">
-          <h1 className="flex justify-center">Perfil de usuario</h1>
+          <h1 className="flex justify-center">Tus datos</h1>
           <form action="#" className='space-x-4'  >
             <div className=''>
               <div className="mb-4 ">
