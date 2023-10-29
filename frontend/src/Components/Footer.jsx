@@ -7,43 +7,23 @@ import { Link } from 'react-router-dom';
 export const Footer = () => {
   return (
     <div className="footer">
-        <div className="ct_footer section-padding">
-            <div className="ct_footer-links">
-                <div className="ct_footer-links_div">
-                    <Link to="/nosotros"><h4 className='hover:text-white'>Sobre nosotros</h4></Link>
-                </div>
-                <div className="ct_footer-links_div">
-                    <h4>Recursos</h4>
-                </div>
-                <div className="ct_footer-links_div">
-                    <h4>Ayuda</h4>
-                </div>
-                <div className="ct_footer-links_div">
-                <Link to="/contacto"><h4 className='hover:text-white'>Contactanos</h4></Link>
-                </div>
-                <div className="ct_footer-links_div">
-                    <h4>Nuestras redes sociales</h4>
-                    <div className="socialmedia">
-                        <a href='https://www.facebook.com/'><p><img src={fb} alt=''/></p></a>
-                        <a href='https://www.twitter.com/'><p><img src={twitter} alt=''/></p></a>
-                        <a href='https://www.instagram.com/'><p><img src={instagram} alt=''/></p></a>
-                    </div>
-                </div>
+    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+        <nav className="grid grid-flow-col gap-4">
+            <Link to="/nosotros"><h4 className='hover:text-white'>Sobre nosotros</h4></Link> 
+            <Link to="/contacto"><h4 className='hover:text-white'>Contáctanos</h4></Link> 
+            <a className="link link-hover">Trabaja con nosotros</a> 
+        </nav> 
+        <nav>
+            <div className="grid grid-flow-col gap-4">
+                <a href='https://www.facebook.com/' className="fill-current w-24 h-24"><p><img src={fb} alt=''/></p></a>
+                <a href='https://www.twitter.com/' className="fill-current w-24 h-24"><p><img src={twitter} alt=''/></p></a>
+                <a href='https://www.instagram.com/' className="fill-current w-24 h-24"><p><img src={instagram} alt=''/></p></a>
             </div>
-
-            <hr></hr>
-
-            <div className="ct_footer-below">
-                <div className="ct_footer-copyright">
-                    <p>
-                        @{new Date().getFullYear()} Sushipleto. Todos los derechos reservados.
-                    </p>
-                </div>
-                <div className="ct_footer-below-links">
-                    <a href='/terms'><div><p>Términos y condiciones.</p></div></a>
-                </div>
-            </div>
-        </div>
+        </nav> 
+        <aside>
+            <a href='/terms'><div><p>Copyright © 2023 - Todos los derechos reservados by Sushipleto</p></div></a>
+        </aside>
+    </footer>
     </div>
   )
 }
