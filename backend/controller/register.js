@@ -1,5 +1,6 @@
 const  db  = require('../db/db'); // Importa la instancia de cliente de db.js
 const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
+const jwt = require('jsonwebtoken');
 
 const registerUser = async (user, email, pass) => {
   try {
@@ -24,19 +25,25 @@ const registerUser = async (user, email, pass) => {
     const hashedPassword = await bcrypt.hash(pass, saltRounds);
 
     // Valor para la columna administrador
-    const administrador = 0;
-
+    const admin = false;
+    const verify = false
     // Parámetros de la consulta
-    const values = [user, email, hashedPassword, administrador];
+
+    const token = jwt.sign({ id_usuario: user, admin: admin }, 'Secreto_XD'); // 'Secreto_XD' es una clave secreta, asegúrate de guardarla de forma segura
+
+    const values = [user, email, hashedPassword, token, admin, verify, type];
 
     const query = `
-    INSERT INTO "registro" ("id_usuario", "email", "password", administrador)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO "registro" ("id_usuario", "email", "password", token,  admin, verify)
+    VALUES ($1, $2, $3, $4, $5, $6)
   `;
-
 
     // Ejecuta la consulta SQL con los valores proporcionados
     await db.none(query, values);
+
+
+
+    return token
   } catch (error) {
     throw error;
   }
