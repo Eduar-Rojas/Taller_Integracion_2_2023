@@ -42,6 +42,8 @@ const loginUser = async (email, pass, type) => {
       type: type
     };
     
+
+    
     const token = jwt.sign(tokenPayload, 'Secreto_XD');
 
     return { userData: tokenPayload, token };

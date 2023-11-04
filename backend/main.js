@@ -13,14 +13,14 @@ app.use(express.json());
 
 app.post('/register', async (req, res) => {
   try {
-    const { user, email, pass } = req.body;
+    const { user, email, pass,type } = req.body;
 
     // Verifica si los datos requeridos existen en la solicitud
-    if (!user || !email || !pass) {
+    if (!user || !email || !pass || !type) {
       return res.status(400).send('Faltan datos requeridos.');
     }
 
-    const token = await registerUser(user, email, pass); // Captura el token generado
+    const token = await registerUser(user, email, pass,type); // Captura el token generado
     // constante token que servira para contener la información del usuario identificado
     
 
@@ -101,6 +101,27 @@ app.get('/api/ventas-por-dia', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener datos de ventas' });
   }
 });
+
+
+app.get('/datos-usuario', auth,  (req,res) => {  // primero que todo se define la ruta "get" para solicitar los datos
+  // lo cual antes se ejecutara primero la funcion "VerificarToken" antes de que llegue a la funcion de manejo de la ruta
+  
+  
+    if (!req.user || !req.user.id_usuario || !req.user.email) { // se asigna una condicion, la cual es que si no existe "req.user"
+    //  (informacion decodificada del usuario) o no existe "id_usuario" o "email", arrojara el error (en este caso '401')
+      return res.status(401).json({ message: 'Acceso no autorizado' });
+    }
+  
+  //  se crea el objeto "usuario" el cual tendra las propiedades "id_usuario" y "email" del objeto "req.user"
+    const usuario= {
+      id_usuario: req.user.id_usuario,
+      email : req.user.email,
+    };
+  
+    res.status(200).json({usuario});
+  });
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

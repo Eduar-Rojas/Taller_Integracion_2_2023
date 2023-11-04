@@ -2,7 +2,7 @@ const  db  = require('../db/db'); // Importa la instancia de cliente de db.js
 const bcrypt = require('bcrypt'); // Libreria que se usara para encriptar la contraseña
 const jwt = require('jsonwebtoken');
 
-const registerUser = async (user, email, pass) => {
+const registerUser = async (user, email, pass,type) => {
   try {
     // Consulta para ver si el correo o el nombre del usuario existen en la base de datos
     const usuarioExistente = await db.oneOrNone('SELECT * FROM registro WHERE email = $1 OR id_usuario = $2', [
