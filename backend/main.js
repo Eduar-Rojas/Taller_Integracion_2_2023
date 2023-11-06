@@ -4,7 +4,8 @@ const cors = require('cors');
 const { registerUser } = require('./controller/register')
 const { loginUser } = require('./controller/login');
 const { getVentasPorDiaQuery } = require('./query/queries_ventas'); 
-const auth = require("./middleware/verifyToken");
+const {VerificarToken} = require("./middleware/verifyToken");
+const { updateUserProfile}=require('./controller/updateprofile')
 
 
 // comando para instalar: npm install bcrypt
@@ -65,7 +66,7 @@ app.post('/login', async (req, res) => {
 
 
 
-app.get('/api/data', auth, (req, res) => {
+app.get('/api/data', VerificarToken, (req, res) => {
   // El middleware de verificación del token ya ha ejecutado, por lo que req.user contiene la información del usuario
   if (req.user.admin === true) {
     // Usuario es un administrador, permitir el acceso
@@ -103,7 +104,8 @@ app.get('/api/ventas-por-dia', async (req, res) => {
 });
 
 
-app.get('/datos-usuario', auth,  (req,res) => {  // primero que todo se define la ruta "get" para solicitar los datos
+
+app.get('/datos-usuario', VerificarToken,  (req,res) => {  // primero que todo se define la ruta "get" para solicitar los datos
   // lo cual antes se ejecutara primero la funcion "VerificarToken" antes de que llegue a la funcion de manejo de la ruta
   
   
@@ -121,6 +123,38 @@ app.get('/datos-usuario', auth,  (req,res) => {  // primero que todo se define l
     res.status(200).json({usuario});
   });
 
+
+  app.post('/actualizar-datos', VerificarToken, async (req, res) => {
+    try {
+      if (!req.user || !req.user.id_usuario || !req.user.email) {
+        return res.status(401).json({ message: 'Acceso no autorizado' });
+      }
+  
+      const { id_usuario, email } = req.body;
+  
+     
+      if (!id_usuario || !email) {
+        return res.status(400).json({ message: 'Faltan datos requeridos.' });
+      }
+  
+  
+      const token = await updateUserProfile(id_usuario, email);
+  
+      res.status(201).json({ message: 'Perfil de usuario actualizado correctamente', token });
+  
+      console.log('Perfil de usuario actualizado exitosamente');
+    } catch (error) {
+      console.error('Error al actualizar el perfil de usuario:', error);
+  
+      if (error.statusCode === 400) {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Error interno del servidor' });
+      }
+    }
+  });
+  
+  
 
 
 const port = process.env.PORT || 3000;

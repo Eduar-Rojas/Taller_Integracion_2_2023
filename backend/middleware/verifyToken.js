@@ -24,4 +24,4 @@ const VerificarToken = (req, res, next) => {   //
     return next();
 };
   
-module.exports = VerificarToken;
+module.exports = {VerificarToken};
