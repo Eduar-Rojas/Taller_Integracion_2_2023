@@ -126,6 +126,38 @@
   .submit :hover {
     box-shadow: #000000 8px;
   }
+
+  .alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 9px;
+    align-items: center;
+    height: 70px;
+    border: none;
+    outline: none;
+    color: #000000;
+    font-size: 19px;
+    
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    
+  }
+  
+  .alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  
   
   @media (max-width: 600px) {
     .outer-container {
@@ -147,6 +179,13 @@
       font-size: 100rem;
     }
   
+
+    .alerta{
+      width: 100%;
+      height: auto;
+
+    }
+    
     .inputs {
       gap: 20px;
     }

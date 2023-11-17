@@ -17,7 +17,7 @@ app.post('/register', async (req, res) => {
     const { user, email, pass,type } = req.body;
 
     // Verifica si los datos requeridos existen en la solicitud
-    if (!user || !email || !pass || !type) {
+    if (!user || !email || !pass ) {
       return res.status(400).send('Faltan datos requeridos.');
     }
 
@@ -123,37 +123,30 @@ app.get('/datos-usuario', VerificarToken,  (req,res) => {  // primero que todo s
     res.status(200).json({usuario});
   });
 
+// ...
 
-  app.post('/actualizar-datos', VerificarToken, async (req, res) => {
-    try {
-      if (!req.user || !req.user.id_usuario || !req.user.email) {
-        return res.status(401).json({ message: 'Acceso no autorizado' });
-      }
-  
-      const { id_usuario, email } = req.body;
-  
-     
-      if (!id_usuario || !email) {
-        return res.status(400).json({ message: 'Faltan datos requeridos.' });
-      }
-  
-  
-      const token = await updateUserProfile(id_usuario, email);
-  
-      res.status(201).json({ message: 'Perfil de usuario actualizado correctamente', token });
-  
-      console.log('Perfil de usuario actualizado exitosamente');
-    } catch (error) {
-      console.error('Error al actualizar el perfil de usuario:', error);
-  
-      if (error.statusCode === 400) {
-        res.status(400).json({ message: error.message });
-      } else {
-        res.status(500).json({ message: 'Error interno del servidor' });
-      }
+app.post('/actualizar-datos', VerificarToken, async (req, res) => {
+  try {
+    const { id_usuario, email } = req.body;
+
+    // Verifica si los datos requeridos existen en la solicitud
+    if (!id_usuario || !email) {
+      return res.status(400).send('Faltan datos requeridos para la actualización.');
     }
-  });
-  
+
+    // Llama a la función de controlador para actualizar el perfil
+    await updateUserProfile(id_usuario, email);
+
+    res.status(200).json({ message: 'Datos de usuario actualizados correctamente' });
+
+  } catch (error) {
+    console.error('Error al actualizar datos de usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor al actualizar datos de usuario' });
+  }
+});
+
+// ...
+
   
 
 

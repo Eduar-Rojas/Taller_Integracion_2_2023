@@ -7,6 +7,9 @@ import Catalogo from './pages/Catalogo'
 import SushiBuild from './pages/SushiBuild';
 import SobreNosotros from './pages/SobreNosotros';
 import Profile from './pages/Profile'
+import { CartShopping } from './Components/CartShopping';
+
+
 
 
 function App() {
@@ -16,11 +19,13 @@ function App() {
         <Route path="/" element={<Principal />} />
         <Route path="/login" element={<LoginRegister />} />
         <Route path="/contacto" element={<ContacUs_form />} />
-        <Route path="/carro" element={<Carro />} />
+        <Route path="/carro" element={<CartShopping />} />
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/personalizarSushi" element={<SushiBuild />} />
         <Route path="/nosotros" element={<SobreNosotros />} />
         <Route path="/profile" element={<Profile />} />
+       
+
       </Routes>
     </Router>
   )
