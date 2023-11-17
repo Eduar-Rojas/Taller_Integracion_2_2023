@@ -90,7 +90,8 @@ const btoninput=(e)=>{
  
     try{
       // se hace una solicitud post a dicha url  con los datos del formulario
-        const respuesta=await Axios.post('http://localhost:3000/registro',formulario);
+        const respuesta=await Axios.post('http://localhost:3000/register',formulario);
+        console.log('Respuesta del servidor:', respuesta);
         if( respuesta.status===200){//respuesta de estado del servidor
             toast.success('Registro exitoso', {//mensaje de alerta en la parte superior derecha 
                 position: 'top-right', 

@@ -31,11 +31,11 @@ const registerUser = async (user, email, pass,type) => {
 
     const token = jwt.sign({ id_usuario: user, admin: admin }, 'Secreto_XD'); // 'Secreto_XD' es una clave secreta, asegúrate de guardarla de forma segura
 
-    const values = [user, email, hashedPassword, token, admin, verify,type];
+    const values = [user, email, hashedPassword, token, admin,type];
 
     const query = `
-    INSERT INTO "registro" ("id_usuario", "email", "password", "token",  "admin", "verify")
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO "registro" ("id_usuario", "email", "password", "token",  "admin")
+    VALUES ($1, $2, $3, $4, $5)
   `;
 
     // Ejecuta la consulta SQL con los valores proporcionados
