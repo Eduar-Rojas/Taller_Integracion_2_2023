@@ -6,7 +6,7 @@ const { loginUser } = require('./controller/login');
 const { getVentasPorDiaQuery } = require('./query/queries_ventas'); 
 const {VerificarToken} = require("./middleware/verifyToken");
 const { updateUserProfile}=require('./controller/updateprofile')
-
+const db = require('./db/db')
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
@@ -68,7 +68,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/api/data', VerificarToken, (req, res) => {
   // El middleware de verificación del token ya ha ejecutado, por lo que req.user contiene la información del usuario
-  if (req.user.admin === true) {
+  if (req.user.role === 'admin') {
     // Usuario es un administrador, permitir el acceso
     const data = {
       message: 'Hola desde Node.js (Acceso para administradores)',

@@ -26,16 +26,24 @@ const registerUser = async (user, email, pass,type) => {
 
     // Valor para la columna administrador
     const admin = false;
-    const verify = false
+    const role = 'user';  // Se puede asignar 'admin' si es un administrador
     // Parámetros de la consulta
 
     const token = jwt.sign({ id_usuario: user, admin: admin }, 'Secreto_XD'); // 'Secreto_XD' es una clave secreta, asegúrate de guardarla de forma segura
 
+<<<<<<< Updated upstream
     const values = [user, email, hashedPassword, token, admin,type];
 
     const query = `
     INSERT INTO "registro" ("id_usuario", "email", "password", "token",  "admin")
     VALUES ($1, $2, $3, $4, $5)
+=======
+    const values = [user, email, hashedPassword, token, admin, role ,type];
+
+    const query = `
+    INSERT INTO "registro" ("id_usuario", "email", "password", "token",  "admin", "role")
+    VALUES ($1, $2, $3, $4, $5, $6)
+>>>>>>> Stashed changes
   `;
 
     // Ejecuta la consulta SQL con los valores proporcionados
