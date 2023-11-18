@@ -17,9 +17,8 @@ class SushiBuild extends Component {
       ingredient2: "",
       selected: null,
       showtext: "",
-      showtext:"",
-      selectedProtein:"",
-   
+      selectedProtein: "",
+
     };
   }
 
@@ -27,7 +26,6 @@ class SushiBuild extends Component {
   handleProteinChange = (event) => {
     this.setState({ protein: event.target.value });
   };
-
 
   handleTemperatureChange = (event) => {
     this.setState({ temperature: event.target.value });
@@ -41,22 +39,6 @@ class SushiBuild extends Component {
     event.preventDefault();
     this.setState({ selected: buttonNumber });
   };
-
-  handleProteinChange = (event) => {
-    const selectedProtein = event.target.value;
-    this.setState({ selectedProtein});
-
-    // Realiza una solicitud GET al servidor para obtener la descripción
-    fetch(`/datos/${selectedProtein}`)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ showtext: data.showtext });
-      })
-      .catch((error) => {
-        console.error('Error al obtener la descripción:', error);
-      });
-  };
-  
 
   handleIngredient1Change = (event) => {
     this.setState({ ingredient1: event.target.value });
@@ -137,9 +119,9 @@ class SushiBuild extends Component {
                 <option value="https://res.cloudinary.com/dx1y7g3j0/image/upload/v1698126726/PolloPlancha_cz8efi.jpg">Pollo</option>
                 <option value="https://res.cloudinary.com/dx1y7g3j0/image/upload/v1698126726/Salmon_lxcldg.jpg">Salmon</option>
                 <option value="https://res.cloudinary.com/dx1y7g3j0/image/upload/v1698126725/Camaron_vrkrew.jpg">Camaron</option>
-             </select>
+              </select>
             </section>
-          
+
 
 
 
@@ -172,47 +154,43 @@ class SushiBuild extends Component {
         <div className="row-start-3 place-self-start p-8 border-solid border-2 rounded-l-lg border-rojito border-opacity-50"> {/* Grid hijo */}
           <h2>Aqui va el imagen al seleccionar algo + descripción</h2>
 
-    {/* Mostrar la descripción de la proteína seleccionada */}
-    {this.state.selectedProtein && (
-  <div className="text-white">
-    <h2>Descripción de la proteína:</h2>
-    <p>{this.state.showtext}</p>
-  </div>
-)}
-
-
-
-
+          {/* Mostrar la descripción de la proteína seleccionada */}
+          {this.state.selectedProtein && (
+            <div className="text-white">
+              <h2>Descripción de la proteína:</h2>
+              <p>{this.state.showtext}</p>
+            </div>
+          )}
 
           <div> {this.state.protein && (
-            <img 
-              src={this.state.protein} 
+            <img
+              src={this.state.protein}
               className="object-cover h-64 w-64" />
-              )}
+          )}
           </div>
 
           <div> {this.state.ingredient1 && (
-            <img 
-              src={this.state.ingredient1} 
+            <img
+              src={this.state.ingredient1}
               className="object-cover h-64 w-64" />
-              )}
+          )}
           </div>
 
           <div> {this.state.ingredient2 && (
-            <img 
-              src={this.state.ingredient2} 
+            <img
+              src={this.state.ingredient2}
               className="object-cover h-64 w-64" />
-              )}
+          )}
           </div>
-<div> {this.state.protein && (
-          <img src={this.state.protein} alt="Seleccion de proteina"
-          style={{ width: '200px', height: '150px',objectFit: 'fill' }} />
+          <div> {this.state.protein && (
+            <img src={this.state.protein} alt="Seleccion de proteina"
+              style={{ width: '200px', height: '150px', objectFit: 'fill' }} />
 
-        )} 
-        
-        {this.state.showtext && <p>Descripción: {this.state.showtext}</p>}
-        
-         </div>
+          )}
+
+            {this.state.showtext && <p>Descripción: {this.state.showtext}</p>}
+
+          </div>
 
         </div>
 

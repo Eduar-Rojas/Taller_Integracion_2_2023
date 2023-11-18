@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import { Catalog } from "../Components/Catalog";
+import { CardCatalogo } from "../Components/CardCatalogo";
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
 
@@ -32,13 +32,9 @@ function Catalogo() {
       </div>
 
       <div className="col-span-5 grid grid-cols-5 gap-4 pt-4">
-        <Catalog/>
-        <Catalog/>
-        <Catalog/>
-        <Catalog/>
-        <Catalog/>
-        <Catalog/>
-        <Catalog/>
+        <CardCatalogo/>
+        <CardCatalogo/>
+        <CardCatalogo/>
       </div>
 
       <div className="col-span-5">

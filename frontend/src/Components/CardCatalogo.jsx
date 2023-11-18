@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from "react";
 import sushi_img from './assets/img/sushicatalog.png'
 
-export const Catalog = () => { 
+export const CardCatalogo = () => { 
 
   // Define un estado llamado productCount para que se le sume o reste 1, estando inicializado en 0
   const [productCount, setProductCount] = useState(0);
