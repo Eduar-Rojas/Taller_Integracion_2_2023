@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Axios from 'axios';
+import sushi_imgFile from './assets/img/sushicatalog.png'
 
 export const CardCatalogo = () => {
   const [sushiList, setSushiList] = useState([]);
@@ -36,9 +37,9 @@ export const CardCatalogo = () => {
   };
 
   return (
-    <div>
+    <div className="grid grid-cols-4">
       {sushiList.map((sushi) => (
-        <div key={sushi.id_producto} className="card w-[calc(25% - 20px)] bg-rojito shadow-xl m-5">
+        <div key={sushi.id_producto} className="card w-[calc(25% - 20px)] bg-rojito shadow-xl m-5 mx-20">
           <figure className="px-10 pt-10">
             <img src={sushi.img} alt={"Imagen de: " + sushi.nombre_producto} className="rounded-xl" />
           </figure>
@@ -51,6 +52,7 @@ export const CardCatalogo = () => {
 
               {/*Modal:   */}
               <dialog id={`my_modal_${sushi.id_producto}`} className="modal" open={modalOpen === sushi.id_producto} onClose={closeModal}>
+                <div className="modal-overlay fixed inset-0 bg-black opacity-70"></div>
                 <div className="modal-box bg-rojito">
                   <h3 className="font-bold text-lg">{sushi.nombre_producto}</h3>
                   <figure className="px-10 pt-10">
@@ -58,7 +60,7 @@ export const CardCatalogo = () => {
                   </figure>
                   <p className="py-4">{sushi.descripcion}</p>
                   <h3 className="font-bold text-lg text-left">Instrucciones especiales:</h3>
-                  <textarea className="textarea textarea-bordered w-64 text-black" placeholder="Coloca una nota"></textarea>
+                  <textarea className="textarea textarea-bordered w-64 text-white" placeholder="Coloca una nota"></textarea>
                   <div className="modal-action">
                     <div className="add-cart flex items-center justify-between">
                       <div className="ml-2 flex items-center">
