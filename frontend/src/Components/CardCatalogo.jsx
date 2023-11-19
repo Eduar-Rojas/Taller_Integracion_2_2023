@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Axios from 'axios';
 import sushi_imgFile from './assets/img/sushicatalog.png'
+import * as jwt_decode from "jwt-decode";
 
 export const CardCatalogo = () => {
   const [sushiList, setSushiList] = useState([]);
   const [modalOpen, setModalOpen] = useState(null);
   const [productCount, setProductCount] = useState(1);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     Axios.get("http://localhost:3000/api/catalogo")
@@ -16,6 +18,38 @@ export const CardCatalogo = () => {
         console.error('Error al solicitar datos al catálogo api desde Frontend: ', error);
       });
   });
+
+
+  const addToCart = (selectedProduct, quantity) => {
+
+      // Obtener el token del localStorage
+  const token = localStorage.getItem("token") // Reemplaza 'userToken' con el nombre de tu clave de token
+  
+  // Decodificar el token para obtener la información del usuario
+  const decodedToken = jwt_decode.jwtDecode(token); // Asegúrate de importar jwt_decode si no lo has hecho
+  console.log(decodedToken);
+
+  // Obtener el ID de usuario desde el token decodificado
+  const userId = decodedToken.id_usuario; // Reemplaza 'id_usuario' con la clave adecuada en tu token
+
+
+    // Aquí debes hacer la solicitud POST al endpoint correspondiente para agregar productos al carrito
+    Axios.post("http://localhost:3000/api/agregar-al-carrito", {
+      id_usuario: userId, // Reemplaza con el ID real del usuario
+      id_producto: selectedProduct.id_producto,
+      cantidad: quantity,
+    })
+      .then((response) => {
+        console.log("Producto agregado al carrito:", response.data);
+        // Puedes manejar la lógica de actualización de estado aquí si lo necesitas
+      })
+      .catch((error) => {
+        console.error("Error al agregar producto al carrito:", error);
+        // Maneja los errores si es necesario
+      });
+    closeModal();
+  };
+
 
   const openModal = (productId) => {
     setModalOpen(productId);
@@ -48,7 +82,7 @@ export const CardCatalogo = () => {
             <p className='font-light'>{sushi.descripcion}</p> {/*Descripcion del producto */}
             <div className="card-actions">
               {/*Lo siguiente es un boton con la funcion onClick para que aparezca el modal */}
-              <button className="btn text-white bg-black" onClick={() => openModal(sushi.id_producto)}>Añadir al carrito</button>
+              <button className="btn text-white bg-black" onClick={() => openModal(sushi.id_producto)}>Ver producto</button>
 
               {/*Modal:   */}
               <dialog id={`my_modal_${sushi.id_producto}`} className="modal" open={modalOpen === sushi.id_producto} onClose={closeModal}>
@@ -70,7 +104,7 @@ export const CardCatalogo = () => {
                         <span className="mx-2 text-white font-bold p-2 rounded-lg"> {productCount} </span>
                         <button className="btn btn-sm text-white bg-black" onClick={incrementCount }> + </button>
                       </div>
-                      <button className="btn bg-black text-white">Agregar</button>
+                      <button className="btn bg-black text-white" onClick={() => addToCart(sushi, productCount)} >Añadir al carrito</button>
                       <p className='font-bold text-3xl'>{`$${sushi.precio * productCount}`}</p>
                     </div>
                   </div>

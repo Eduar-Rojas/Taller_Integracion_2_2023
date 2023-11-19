@@ -149,7 +149,28 @@ app.post('/actualizar-datos', VerificarToken, async (req, res) => {
   }
 });
 
-// ...
+
+
+app.post('/api/agregar-al-carrito', async (req, res) => {
+  try {
+    const { id_usuario, id_producto, cantidad } = req.body;
+
+    // Aquí ejecuta la consulta SQL para insertar el producto en la tabla del carrito
+    // Utiliza el id_usuario y id_producto recibidos para realizar la inserción
+
+    // Ejemplo de consulta (asegúrate de usar tu propio método para interactuar con la base de datos)
+    const query = `INSERT INTO carrito_compras (id_usuario, id_producto, cantidad) VALUES ($1, $2, $3)`;
+    await db.none(query, [id_usuario, id_producto, cantidad]);
+
+    res.status(200).json({ message: 'Producto agregado al carrito correctamente' });
+    console.log('Producto agregado al carrito correctamente');
+  } catch (error) {
+    console.error('Error al agregar producto al carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor al agregar producto al carrito' });
+  }
+});
+
+
 
   
 
