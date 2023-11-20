@@ -151,7 +151,6 @@ export const Admin = () => {
               <td>Carroll Group
                 <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
               </td>
-              <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
             </tr>
             <tr>
               <th>2</th> 
@@ -167,7 +166,6 @@ export const Admin = () => {
               <td>Carroll Group
                 <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
               </td>
-              <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
             </tr>
             <tr>
               <th>3</th> 
@@ -183,7 +181,6 @@ export const Admin = () => {
               <td>Carroll Group
               <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
               </td>
-              <button className="text-rojito px-3 py-2 rounded font-bold">X</button> 
             </tr>
           </tbody> 
         </table>

@@ -2,12 +2,44 @@ import { useState, useEffect } from "react";
 import Axios from 'axios';
 import * as jwt_decode from "jwt-decode";
 import sushi_img from './assets/img/sushicatalog.png'
+import './assets/css/Radial_progress.css'
+import { Link } from 'react-router-dom';
 
 export const CartShopping = () => {
 
   const [cartsushiCarritos, setCartsushiCarritos] = useState([]); // Define cartsushiCarritos en el estado local del componente
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
 
+  const resetLoadingProgress = () => {
+    setLoadingProgress(0);
+  };
   
+  const handleFinishOrder = () => {
+    resetLoadingProgress();
+    // Muestra el modal
+    const modal = document.getElementById('my_modal_4');
+    modal.showModal();
+
+    const interval = setInterval(() => {
+      setLoadingProgress((prevProgress) => {
+        const newProgress = prevProgress + 10;
+        return newProgress > 100 ? 100 : newProgress;
+      });
+    }, 500);
+
+     // Simula una carga de 0% a 100% durante 5 segundos
+    setTimeout(() => {
+    clearInterval(interval);
+    modal.close();
+
+    setSuccessModalVisible(true);
+
+    // Puedes restablecer el progreso de carga a 0 al finalizar
+    setLoadingProgress(0);
+      }, 5000);
+    };
+
   useEffect(() => {
     // Obtener el token del localStorage
     const token = localStorage.getItem("token");
@@ -128,7 +160,40 @@ export const CartShopping = () => {
           <tr>
             <td colSpan="4"></td>
             <td className="flex justify-between">
-              <button className="btn btn-success">Finalizar pedido</button>
+            <button className="btn btn-success" onClick={handleFinishOrder}>Finalizar pedido</button>
+              {/* modal*/}
+              <dialog id="my_modal_4" className="modal">
+                <div className="modal-box flex justify-center">
+                  <form method="dialog">
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => {
+                      document.getElementById('my_modal_4').close();
+                      resetLoadingProgress();
+                    }}
+                    >✕</button>
+                  </form>
+                  <h3 className="font-bold text-lg text-center text-white p-10">Creando pedido</h3>
+                    <div className="radial-progress mt-4" style={{ "--value": `${loadingProgress}%` }} role="progressbar">
+                      {loadingProgress}%
+                    </div>
+                </div>
+              </dialog>
+              <dialog id="my_modal_5" className="modal" open={successModalVisible}>
+                <div className="modal-box h-40">
+                  <h3 className="font-bold text-lg text-center text-white p-4">¡Pedido creado con éxito!</h3>
+                  <form method="dialog">
+                  <Link to="/">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        setSuccessModalVisible(false);
+                      }}
+                    >
+                      Llévame al inicio
+                    </button>
+                  </Link>
+                  </form>
+                </div>
+              </dialog>
             </td>
           </tr>
     </tfoot>       
