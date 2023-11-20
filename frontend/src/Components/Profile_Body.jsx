@@ -91,6 +91,38 @@ const Profile_Body = () => {
         <div className="justify-self-end">
           <h1 className="flex justify-center">Historial</h1>
           {/* ... (tu tabla de historial) */}
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>N° Pedido</th>
+                  <th>Pedido</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                <tr className="hover">
+                  <th>1</th>
+                  <td>Cy Ganderton</td>
+                  <td>Quality Control Specialist</td>
+                </tr>
+                {/* row 2 */}
+                <tr className="hover">
+                  <th>2</th>
+                  <td>Hart Hagerty</td>
+                  <td>Desktop Support Technician</td>
+                </tr>
+                {/* row 3 */}
+                <tr className="hover">
+                  <th>3</th>
+                  <td>Brice Swyre</td>
+                  <td>Tax Accountant</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="justify-self-start text-white">
           <h1 className="flex justify-center">Tus datos</h1>

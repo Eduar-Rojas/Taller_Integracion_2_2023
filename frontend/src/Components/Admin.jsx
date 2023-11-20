@@ -1,6 +1,7 @@
 import React from 'react'
 
 export const Admin = () => {
+  
   return (
   <div className='grid grid-cols-3 gap-4'>
       {/* Atrasado */}
@@ -22,21 +23,30 @@ export const Admin = () => {
         <th>1</th> 
         <td>Cy Ganderton</td> 
         <td>Quality Control Specialist</td>
-        <td>Carroll Group</td> 
+        <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td> 
         <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
       </tr>
       <tr>
         <th>2</th> 
         <td>Hart Hagerty</td> 
         <td>Desktop Support Technician</td> 
-        <td>Carroll Group</td>
+        <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td>
         <button className="text-rojito px-3 py-2 rounded font-bold">X</button> 
       </tr>
       <tr>
         <th>3</th> 
         <td>Brice Swyre</td> 
         <td>Tax Accountant</td> 
-        <td>Carroll Group</td>
+        <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td>
         <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
       </tr>
     </tbody> 
@@ -62,21 +72,30 @@ export const Admin = () => {
             <th>1</th> 
             <td>Cy Ganderton</td> 
             <td>Quality Control Specialist</td>
-            <td>Carroll Group</td>
+            <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td>
             <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
           </tr>
           <tr>
             <th>2</th> 
             <td>Hart Hagerty</td> 
             <td>Desktop Support Technician</td> 
-            <td>Carroll Group</td> 
+            <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td> 
             <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
           </tr>
           <tr>
             <th>3</th> 
             <td>Brice Swyre</td> 
             <td>Tax Accountant</td> 
-            <td>Carroll Group</td> 
+            <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td> 
             <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
           </tr>
       </tbody> 
@@ -101,21 +120,30 @@ export const Admin = () => {
               <th>1</th> 
               <td>Cy Ganderton</td> 
               <td>Quality Control Specialist</td>
-              <td>Carroll Group</td>
+              <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td>
               <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
             </tr>
             <tr>
               <th>2</th> 
               <td>Hart Hagerty</td> 
               <td>Desktop Support Technician</td> 
-              <td>Carroll Group</td> 
+              <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td> 
               <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
             </tr>
             <tr>
               <th>3</th> 
               <td>Brice Swyre</td> 
               <td>Tax Accountant</td> 
-              <td>Carroll Group</td>
+              <td><span className="countdown font-mono text-xl">
+                  <span style={{"--value":30}}></span>:
+                  <span style={{"--value":24}}></span>
+                  </span></td>
               <button className="text-rojito px-3 py-2 rounded font-bold">X</button>
             </tr>
           </tbody> 
