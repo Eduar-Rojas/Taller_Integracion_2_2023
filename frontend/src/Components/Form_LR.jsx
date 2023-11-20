@@ -1,20 +1,24 @@
-import { useState , useEffect} from 'react'
-import Axios from 'axios'
-import './assets/css/Form_LR.css'
-import user_icon from './assets/img/usuario.png'
-import email_icon from './assets/img/email.png'
-import password_icon from './assets/img/contraseña.png'
-import logo from './assets/img/Logo.png'
-import { Link } from 'react-router-dom';
+import { useState} from 'react';
+import { useNavigate, Link} from 'react-router-dom';  // Cambiar de useHistory a useNavigate
+import Axios from 'axios';
+import './assets/css/Form_LR.css';
+import user_icon from './assets/img/usuario.png';
+import email_icon from './assets/img/email.png';
+import password_icon from './assets/img/contraseña.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
+import { useAuth } from './useAuth';
+
 
 
 export const Form_LR = () => {
 
     const [userData,setUserData] = useState(null); 
     const[action,setAction] = useState("Registrar");
+    const history = useNavigate();
+    const {isAuthenticated} = useAuth();
+    
 
 
     //useState :administra  estados 
@@ -120,10 +124,12 @@ const btoninput=(e)=>{
                     autoClose: 5000, // dura 5segundos
                   });
                   localStorage.setItem('token', respuesta.data.token); // Almacena el token en localStorage del navegador
-                  setToken(respuesta.data.token); // actualiza el estado del token y se envia de vuelta al cliente(frontend)
-                  setUserData(respuesta.data.usuario);
+                  setToken(respuesta.data.usuario); // actualiza el estado del token y se envia de vuelta al cliente(frontend)
+                  setUserData(respuesta.data.token);
                   console.log('Inicio de sesión exitoso');
+                  console.log('isAuthenticated changed:', isAuthenticated());
                   // Aquí podrías redirigir al usuario a otra página después del inicio de sesión exitoso
+                  history('/')
             }
         } catch (error) {
 
