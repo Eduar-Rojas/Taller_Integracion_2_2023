@@ -7,7 +7,6 @@ export const CardCatalogo = () => {
   const [sushiList, setSushiList] = useState([]);
   const [modalOpen, setModalOpen] = useState(null);
   const [productCount, setProductCount] = useState(1);
-  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     Axios.get("http://localhost:3000/api/catalogo")
