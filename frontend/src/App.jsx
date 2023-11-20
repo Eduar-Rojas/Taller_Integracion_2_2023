@@ -8,6 +8,7 @@ import SushiBuild from './pages/SushiBuild';
 import SobreNosotros from './pages/SobreNosotros';
 import Profile from './pages/Profile'
 import { CartShopping } from './Components/CartShopping';
+import AdminPedidos from './pages/AdminPedidos';
 
 
 
@@ -24,8 +25,7 @@ function App() {
         <Route path="/personalizarSushi" element={<SushiBuild />} />
         <Route path="/nosotros" element={<SobreNosotros />} />
         <Route path="/profile" element={<Profile />} />
-       
-
+        <Route path="/AdminPedidos" element={<AdminPedidos />} />
       </Routes>
     </Router>
   )

@@ -8,7 +8,7 @@ const {VerificarToken} = require("./middleware/verifyToken");
 const { updateUserProfile}=require('./controller/updateprofile')
 const db = require('./db/db')
 const catalogoController = require('./controller/catalogo')
-const sushiBuildController = require('./controller/SushiBuild');
+
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
@@ -16,6 +16,8 @@ app.use(express.json());
 
 app.use('/api', catalogoController)
 app.use('/api', sushiBuildController)
+
+app.use('/api', MostrarCarrito)
 
 app.post('/register', async (req, res) => {
   try {
@@ -154,14 +156,34 @@ app.post('/actualizar-datos', VerificarToken, async (req, res) => {
 
 app.post('/api/agregar-al-carrito', async (req, res) => {
   try {
-    const { id_usuario, id_producto, cantidad } = req.body;
+    const { id_usuario, id_producto, cantidad} = req.body;
 
     // Aquí ejecuta la consulta SQL para insertar el producto en la tabla del carrito
     // Utiliza el id_usuario y id_producto recibidos para realizar la inserción
 
     // Ejemplo de consulta (asegúrate de usar tu propio método para interactuar con la base de datos)
-    const query = `INSERT INTO carrito_compras (id_usuario, id_producto, cantidad) VALUES ($1, $2, $3)`;
-    await db.none(query, [id_usuario, id_producto, cantidad]);
+    const productDetailsQuery = `SELECT nombre_producto, descripcion, precio FROM catalogo WHERE id_producto = $1`;
+    const productDetails = await db.one(productDetailsQuery, [id_producto]);
+
+    // Obtener los detalles del producto
+    const { nombre_producto, descripcion, precio } = productDetails;
+
+    // Calcular el nuevo precio multiplicando la cantidad por el precio
+    const nuevoPrecio = cantidad * precio;
+
+    // Insertar el producto en la tabla "carrito_compras" con el nuevo precio
+    const insertQuery = `
+      INSERT INTO carrito_compras (id_usuario, id_producto, cantidad, nombrepro, descpro, precio)
+      VALUES ($1, $2, $3, $4, $5, $6)
+    `;
+    await db.none(insertQuery, [
+      id_usuario,
+      id_producto,
+      cantidad,
+      nombre_producto,
+      descripcion,
+      nuevoPrecio // Se guarda el nuevo precio calculado
+    ])
 
     res.status(200).json({ message: 'Producto agregado al carrito correctamente' });
     console.log('Producto agregado al carrito correctamente');

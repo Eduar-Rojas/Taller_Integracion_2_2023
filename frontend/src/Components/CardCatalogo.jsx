@@ -39,6 +39,16 @@ export const CardCatalogo = () => {
       id_producto: selectedProduct.id_producto,
       cantidad: quantity,
     })
+
+    
+
+// nombrepre: sushi.nombre_producto,
+// descpro: sushi.descripcion,
+// precio: sushi.precio
+
+
+
+
       .then((response) => {
         console.log("Producto agregado al carrito:", response.data);
         // Puedes manejar la lógica de actualización de estado aquí si lo necesitas

@@ -3,7 +3,18 @@ import sushi_img from './assets/img/sushicatalog.png'
 
 export const CartShopping = () => {
 
-  const [cartItems, setCartItems] = useState([]); // Define cartItems en el estado local del componente
+  const [cartsushiCarritos, setCartsushiCarritos] = useState([]); // Define cartsushiCarritos en el estado local del componente
+
+
+  useEffect(() => {
+    Axios.get("http://localhost:3000/api/catalogo")
+      .then((response) => {
+        setCartsushiCarritos(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al solicitar datos al catálogo api desde Frontend: ', error);
+      });
+  });
 
     // Define un estado llamado productCount para que se le sume o reste 1, estando inicializado en 0
   const [productCount, setProductCount] = useState(0);
@@ -21,9 +32,9 @@ export const CartShopping = () => {
   };
 
   const removeFromCart = (index) => {
-    const updatedCart = [...cartItems];
+    const updatedCart = [...cartsushiCarritos];
     updatedCart.splice(index, 1);
-    setCartItems(updatedCart);
+    setCartsushiCarritos(updatedCart);
   };
 
   return (
@@ -38,15 +49,15 @@ export const CartShopping = () => {
     </thead>
     <tbody>
       {/* Fila 1 */}
-      {cartItems.map((item, index)=>(
+      {cartsushiCarritos.map((sushiCarrito, index)=>(
       <tr key={index} >
         <td>
-          <div className="flex items-center space-x-3">
+          <div className="flex sushiCarritos-center space-x-3">
               <div className="mask mask-squircle">
-                <img className='w-20 h-20' src={item.product.img} alt="Product"/>
+                <img className='w-20 h-20' /*"src={}"*/ alt="Product"/>
               </div>
             <div>
-              <div className="font-bold text-white">{item.product.nombre_producto}</div>
+              <div className="font-bold text-white">{sushiCarrito.product.nombre_producto}</div>
             </div>
           </div>
         </td>
@@ -54,10 +65,10 @@ export const CartShopping = () => {
             {/* Botones para aumentar o disminuir la cantidad del pedido*/}
             <button className="btn btn-sm text-white bg-black" onClick={decrementCount}> - </button>
             {/* productCount muestra la cantidad actual de productos */}
-            <span className="mx-2 text-white font-bold p-2 rounded-lg"> {item.quantity} </span>
+            <span className="mx-2 text-white font-bold p-2 rounded-lg"> {sushiCarrito.cantidad} </span>
             <button className="btn btn-sm text-white bg-black" onClick={incrementCount}> + </button>
         </td>
-        <td className='text-white'>{`$${item.product.precio * item.quantity}`}</td>
+        <td className='text-white'>{`$${sushiCarrito.product.precio * sushiCarrito.quantity}`}</td>
         {/* Apertura modal */}
         <th>
           <button className="btn btn-ghost btn-xs text-white" onClick={()=>document.getElementById('my_modal_3').showModal()}>Detalles del pedido</button>
