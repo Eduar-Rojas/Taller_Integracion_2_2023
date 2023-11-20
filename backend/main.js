@@ -8,13 +8,14 @@ const {VerificarToken} = require("./middleware/verifyToken");
 const { updateUserProfile}=require('./controller/updateprofile')
 const db = require('./db/db')
 const catalogoController = require('./controller/catalogo')
+const sushiBuildController = require('./controller/SushiBuild');
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 app.use('/api', catalogoController)
-//app.use('/api', sushiBuildController)
+app.use('/api', sushiBuildController)
 
 app.post('/register', async (req, res) => {
   try {

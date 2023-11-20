@@ -17,7 +17,7 @@ export const CardCatalogo = () => {
       .catch((error) => {
         console.error('Error al solicitar datos al catálogo api desde Frontend: ', error);
       });
-  });
+    }, []);
 
 
   const addToCart = (selectedProduct, quantity) => {
