@@ -122,7 +122,7 @@ export const Admin = () => {
         </table>
       </div>
     </div>
-    {/* insumos disponibles */}
+    {/* ------------------------------------------- insumos disponibles ------------------------------------------------------- */}
     <div className="card w-100 h-96 bg-rojito text-primary-content col-span-3">
       <div className="card-body">
         <h2 className="text-center text-xl font-bold">Insumos disponibles</h2>
@@ -133,7 +133,6 @@ export const Admin = () => {
               <th>Envolturas</th> 
               <th>Vegetales</th> 
               <th>Proteínas</th>
-              <th>Bebestibles</th>
             </tr>
           </thead> 
           <tbody>
