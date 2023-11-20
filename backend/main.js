@@ -8,6 +8,8 @@ const {VerificarToken} = require("./middleware/verifyToken");
 const { updateUserProfile}=require('./controller/updateprofile')
 const db = require('./db/db')
 const catalogoController = require('./controller/catalogo')
+const sushiBuildController = require('./controller/SushiBuild')
+const MostrarCarrito = require('./controller/Carrito')
 
 
 // comando para instalar: npm install bcrypt
