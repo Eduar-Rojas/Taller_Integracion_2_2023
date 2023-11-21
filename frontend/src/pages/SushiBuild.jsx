@@ -42,15 +42,13 @@ const SushiBuild = () => {
     fetchIngredients('Envoltura', setWrapIngredients);
   }, []);
 
-  // La dependencia vacía asegura que se ejecute solo una vez al montar el componente
-
   // Métodos
   const updateSummary = (category, value) => {
     // Verifica si ya hay una entrada para la categoría en el resumen
     const existingIndex = summary.findIndex(item => item.category === category);
 
     if (existingIndex !== -1) {
-      // Si la categoría ya existe, actualiza el valor
+      // Si la entrada para la categoría ya existe, actualiza el valor
       const updatedSummary = [...summary];
       updatedSummary[existingIndex] = { category, value };
       setSummary(updatedSummary);
@@ -114,6 +112,51 @@ const SushiBuild = () => {
     }
 
     return summaryData;
+  };
+
+  // Método que valida la disponibilidad de los ingredientes seleccionados
+  const validateAvailability = () => {
+    const unavailableIngredients = [];
+
+    // Verifica la disponibilidad de la envoltura si está seleccionada
+    if (temperature === '1' && wrap) {
+      const selectedWrap = wrapIngredients.find(ingredient => ingredient.nombre === wrap);
+      if (!selectedWrap || !selectedWrap.disponibilidad) {
+        unavailableIngredients.push('Envoltura');
+      }
+    }
+
+    // Verifica la disponibilidad de la proteína si está seleccionada
+    if (protein) {
+      const selectedProtein = proteinIngredients.find(ingredient => ingredient.nombre === protein);
+      if (!selectedProtein || !selectedProtein.disponibilidad) {
+        unavailableIngredients.push('Proteina');
+      }
+    }
+
+    // Verifica la disponibilidad del primer relleno si está seleccionado
+    if (ingredient1) {
+      const selectedIngredient1 = fillingIngredients.find(ingredient => ingredient.nombre === ingredient1);
+      if (!selectedIngredient1 || !selectedIngredient1.disponibilidad) {
+        unavailableIngredients.push('Primer Relleno');
+      }
+    }
+
+    // Verifica la disponibilidad del segundo relleno si está seleccionado
+    if (ingredient2) {
+      const selectedIngredient2 = fillingIngredients.find(ingredient => ingredient.nombre === ingredient2);
+      if (!selectedIngredient2 || !selectedIngredient2.disponibilidad) {
+        unavailableIngredients.push('Segundo Relleno');
+      }
+    }
+
+    // Muestra un mensaje si hay ingredientes no disponibles
+    if (unavailableIngredients.length > 0) {
+      alert(`El ingrediente escogido en '${unavailableIngredients.join(', ')}', no está disponible`);
+    } else {
+      alert('¡Ingredientes disponibles!');
+      // Aquí puedes agregar lógica adicional si todos los ingredientes están disponibles
+    }
   };
 
 
@@ -234,8 +277,9 @@ const SushiBuild = () => {
           ))}
         </ul>
 
+        {/*Boton que comprueba si los datos están disponibles. */}
         <div>
-          <button className="btn btn-xs sm:btn-sm md:btn-md">Agregar</button>
+          <button className="btn btn-xs sm:btn-sm md:btn-md" onClick={validateAvailability}>Agregar</button>
         </div>
       </div>
 
