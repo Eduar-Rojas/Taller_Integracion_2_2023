@@ -275,10 +275,10 @@ export const CartShopping = () => {
         </th>
       </tr>
       ))}
+
     </tbody>
     <tfoot>
-    {cartsushiCarritos.map(( index)=>(
-      
+    {((cartsushiCarritos.length > 0) || (cartsushiPedidos.length > 0)) && (
           <tr>
             <td colSpan="4"></td>
             <td className="flex justify-between">
@@ -319,7 +319,7 @@ export const CartShopping = () => {
               </dialog>
             </td>
           </tr>
-          ))}
+          )}
     </tfoot>       
   </table>
 </div>
