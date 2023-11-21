@@ -118,7 +118,7 @@ export const CartShopping = () => {
         <td>
           <div className="flex sushiCarritos-center space-x-3">
               <div className="mask mask-squircle">
-                <img className='w-20 h-20' /*"src={}"*/ alt="Product"/>
+                <img className='w-20 h-20' src={sushiCarrito.img} alt="Product"/>
               </div>
             <div>
               <div className="font-bold text-white">{sushiCarrito.nombrepro}</div>
@@ -144,9 +144,9 @@ export const CartShopping = () => {
                 </form>
                 <h3 className="font-bold text-lg text-center text-white">Sushi</h3>
                 <figure className="px-10 pt-10 text-center">
-                    <img src={sushi_img} alt="Product" className="rounded-xl mx-auto" />
+                    <img src={sushiCarrito.img} alt="Product" className="rounded-xl mx-auto" />
                 </figure>
-                <p className="py-4 text-white"> {sushiCarrito.descpro} </p>
+                <p className="py-4 text-white" style={{ textAlign: 'center' }} > {sushiCarrito.descpro} </p>
             </div>
           </dialog>
         </th>
@@ -157,6 +157,8 @@ export const CartShopping = () => {
       ))}
     </tbody>
     <tfoot>
+    {cartsushiCarritos.map(( index)=>(
+      
           <tr>
             <td colSpan="4"></td>
             <td className="flex justify-between">
@@ -186,8 +188,9 @@ export const CartShopping = () => {
                       className="btn btn-success"
                       onClick={() => {
                         setSuccessModalVisible(false);
+                        removeFromCart(index);
                       }}
-                    >
+                     >
                       Llévame al inicio
                     </button>
                   </Link>
@@ -196,6 +199,7 @@ export const CartShopping = () => {
               </dialog>
             </td>
           </tr>
+          ))}
     </tfoot>       
   </table>
 </div>

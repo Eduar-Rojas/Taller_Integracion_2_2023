@@ -158,25 +158,22 @@ app.post('/actualizar-datos', VerificarToken, async (req, res) => {
 
 app.post('/api/agregar-al-carrito', async (req, res) => {
   try {
-    const { id_usuario, id_producto, cantidad} = req.body;
+    const { id_usuario, id_producto, cantidad } = req.body;
 
-    // Aquí ejecuta la consulta SQL para insertar el producto en la tabla del carrito
-    // Utiliza el id_usuario y id_producto recibidos para realizar la inserción
+    // Consultar la tabla 'catalogo' para obtener la URL de la imagen del producto
+    const productDetailsQuery = `SELECT nombre_producto, descripcion, precio, img FROM catalogo WHERE id_producto = $1`;
+    const productDetails = await db.one(productDetailsQuery, [id_producto]);
 
-        // Ejemplo de consulta (asegúrate de usar tu propio método para interactuar con la base de datos)
-        const productDetailsQuery = `SELECT nombre_producto, descripcion, precio FROM catalogo WHERE id_producto = $1`;
-        const productDetails = await db.one(productDetailsQuery, [id_producto]);
-    
-        // Obtener los detalles del producto
-        const { nombre_producto, descripcion, precio } = productDetails;
+    // Obtener los detalles del producto, incluida la URL de la imagen
+    const { nombre_producto, descripcion, precio, img } = productDetails;
 
     // Calcular el nuevo precio multiplicando la cantidad por el precio
     const nuevoPrecio = cantidad * precio;
 
-    // Insertar el producto en la tabla "carrito_compras" con el nuevo precio
+    // Insertar el producto en la tabla 'carrito_compras' con la URL de la imagen obtenida
     const insertQuery = `
-      INSERT INTO carrito_compras (id_usuario, id_producto, cantidad, nombrepro, descpro, precio)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO carrito_compras (id_usuario, id_producto, cantidad, nombrepro, descpro, precio, img)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
     `;
     await db.none(insertQuery, [
       id_usuario,
@@ -184,8 +181,9 @@ app.post('/api/agregar-al-carrito', async (req, res) => {
       cantidad,
       nombre_producto,
       descripcion,
-      nuevoPrecio // Se guarda el nuevo precio calculado
-    ])
+      nuevoPrecio,
+      img // Utiliza la URL de la imagen obtenida de la tabla 'catalogo'
+    ]);
 
     res.status(200).json({ message: 'Producto agregado al carrito correctamente' });
     console.log('Producto agregado al carrito correctamente');
@@ -194,6 +192,7 @@ app.post('/api/agregar-al-carrito', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor al agregar producto al carrito' });
   }
 });
+
 
 
 app.get('/api/carrito-compras/:id_usuario', async (req, res) => {
