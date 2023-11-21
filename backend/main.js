@@ -5,7 +5,8 @@ const { registerUser } = require('./controller/register')
 const { loginUser } = require('./controller/login');
 const { getVentasPorDiaQuery } = require('./query/queries_ventas'); 
 const {VerificarToken} = require("./middleware/verifyToken");
-const { updateUserProfile}=require('./controller/updateprofile')
+
+const {DeleteUserProfile}=require('./controller/deleteprofile')
 const db = require('./db/db')
 const catalogoController = require('./controller/catalogo')
 const sushiBuildController = require('./controller/SushiBuild');
@@ -118,14 +119,15 @@ app.get('/datos-usuario', VerificarToken,  (req,res) => {  // primero que todo s
   // lo cual antes se ejecutara primero la funcion "VerificarToken" antes de que llegue a la funcion de manejo de la ruta
   
   
-    if (!req.user || !req.user.id_usuario || !req.user.email) { // se asigna una condicion, la cual es que si no existe "req.user"
+    if (!req.user || !req.user.nombre_usuario || !req.user.email) { // se asigna una condicion, la cual es que si no existe "req.user"
     //  (informacion decodificada del usuario) o no existe "id_usuario" o "email", arrojara el error (en este caso '401')
       return res.status(401).json({ message: 'Acceso no autorizado' });
     }
   
   //  se crea el objeto "usuario" el cual tendra las propiedades "id_usuario" y "email" del objeto "req.user"
     const usuario= {
-      id_usuario: req.user.id_usuario,
+      idregistro:req.user.idregistro,
+      nombre_usuario: req.user.nombre_usuario,
       email : req.user.email,
     };
   
@@ -134,27 +136,48 @@ app.get('/datos-usuario', VerificarToken,  (req,res) => {  // primero que todo s
 
 // ...
 
-app.post('/actualizar-datos', VerificarToken, async (req, res) => {
+app.post('/actualizardatos', VerificarToken, async (req, res) => {
   try {
-    const { id_usuario, email } = req.body;
-
+    const { nombre_usuario, email, id } = req.body;
+ 
     // Verifica si los datos requeridos existen en la solicitud
-    if (!id_usuario || !email) {
-      return res.status(400).send('Faltan datos requeridos para la actualización.');
+    if (!nombre_usuario || !email) {
+      return res.status(400).json({ message: 'Faltan datos requeridos.' });
     }
-
-    // Llama a la función de controlador para actualizar el perfil
-    await updateUserProfile(id_usuario, email);
-
-    res.status(200).json({ message: 'Datos de usuario actualizados correctamente' });
-
+ 
+    try {
+      // Consulta SQL para actualizar el perfil del usuario
+      const updateQuery = `
+        UPDATE "registro"
+        SET "id_usuario" = $1, "email" = $2
+        WHERE "id_usuario" = $3
+        RETURNING *
+      `;
+ 
+      const updatedUserData = await db.oneOrNone(updateQuery, [nombre_usuario, email, id]);
+ 
+      // Devuelve los datos actualizados del usuario
+      res.status(200).json({ message: 'Perfil de usuario actualizado correctamente', updatedUserData });
+    } catch (error) {
+      console.error('Error al actualizar el perfil del usuario:', error.message);
+      throw error;
+    }
   } catch (error) {
-    console.error('Error al actualizar datos de usuario:', error);
-    res.status(500).json({ error: 'Error interno del servidor al actualizar datos de usuario' });
+    console.error('Error al actualizar el perfil del usuario:', error);
+ 
+    if (error.message === 'No se pudo actualizar el perfil del usuario.') {
+      // Puedes usar el mensaje específico de la excepción
+      res.status(400).json({ message: 'No se pudo actualizar el perfil del usuario.' });
+    } else if (error.statusCode === 404) {
+      // Usuario no encontrado
+      res.status(404).json({ message: 'Usuario no encontrado' });
+    } else {
+      // Otros errores
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
   }
-});
-
-
+ });
+ 
 
 app.post('/api/agregar-al-carrito', async (req, res) => {
   try {
@@ -293,7 +316,48 @@ app.delete('/api/agregar-al-carrito-sushi/:id_pedido', async (req, res) => {
 
 
 
-  
+app.get('/api/mandar-carrito-compras/:id_carrito',async(req,res)=>{
+  try {
+    const { id_carrito } = req.params;
+ 
+    // Perform the SQL query to get the element from the cart by its ID
+    const result = await db.oneOrNone('SELECT id_producto,nombrepro,precio FROM carrito_compras WHERE id_carrito = $1', [id_carrito]);
+ 
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error ak mostrar:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+ });
+
+
+
+
+  //eliminar cuenta
+app.post('/eliminacioncuenta', VerificarToken, async (req, res) => {
+  try {
+    const { nombre_usuario,email } = req.body;
+    if (!nombre_usuario) {
+      return res.status(400).send('Faltan datos requeridos para la eliminación de la cuenta.');
+    }
+
+   
+    await DeleteUserProfile(nombre_usuario,email);
+
+    res.status(200).json({ message: 'Cuenta de usuario eliminada correctamente' });
+
+  } catch (error) {
+    console.error('Error al eliminar la cuenta de usuario:', error);
+
+    if (error.message === 'No se pudo eliminar el perfil del usuario.') {
+      return res.status(400).json({ error: 'No se pudo eliminar el perfil del usuario.' });
+    }
+
+    res.status(500).json({ error: 'Error interno del servidor al eliminar la cuenta de usuario' });
+  }
+});
+
+
 
 
 const port = process.env.PORT || 3000;

@@ -15,30 +15,59 @@ export const CartShopping = () => {
     setLoadingProgress(0);
   };
   
-  const handleFinishOrder = () => {
+  const handleFinishOrder = (cartItems) => {
     resetLoadingProgress();
-    // Muestra el modal
+  
+    // Mostrar el modal de progreso
     const modal = document.getElementById('my_modal_4');
     modal.showModal();
-
+  
+    // Simular progreso de carga
     const interval = setInterval(() => {
       setLoadingProgress((prevProgress) => {
         const newProgress = prevProgress + 10;
         return newProgress > 100 ? 100 : newProgress;
       });
     }, 500);
-
-     // Simula una carga de 0% a 100% durante 5 segundos
+  
+    // Simular carga durante 5 segundos
     setTimeout(() => {
-    clearInterval(interval);
-    modal.close();
+      clearInterval(interval);
+      modal.close();
+  
+      // Obtener el token del localStorage
+      const token = localStorage.getItem("token");
+  
+      // Verificar si el token existe
+      if (token) {
+        // Decodificar el token para obtener la información
+        const decodedToken = jwt_decode(token);
+  
+        // Extraer la ID de usuario del token decodificado
+        const userId = decodedToken.id_usuario;
+  
+        // Enviar los datos del carrito al backend
+        Axios.post(`http://localhost:3000/api/mandar-carrito-compras/${userId}`, cartsushiCarritos)
+        console.log("Finishing order with cart items:", cartItems)
+          .then((response) => {
+            console.log(response);
+            // Actualiza el estado del componente con la respuesta del servidor
+            setCartsushiCarritos(response.data);
+          })
+          .catch((error) => {
+            console.error('Error al enviar datos del carrito al servidor: ', error);
+          });
+      } else {
+        // Manejar el caso en el que el token no está presente en localStorage
+        console.error('No se encontró el token en localStorage');
+      }
+  
+      // Resetear el progreso de carga al 0 al finalizar
+      setLoadingProgress(0);
+    }, 5000);
+  };
+  
 
-    setSuccessModalVisible(true);
-
-    // Puedes restablecer el progreso de carga a 0 al finalizar
-    setLoadingProgress(0);
-      }, 5000);
-    };
 
   useEffect(() => {
     // Obtener el token del localStorage
@@ -109,6 +138,9 @@ export const CartShopping = () => {
       setProductCount(productCount - 1);
     }
   };
+
+
+   
 
   const removeFromCart = async (index) => {
     try {
@@ -250,7 +282,7 @@ export const CartShopping = () => {
           <tr>
             <td colSpan="4"></td>
             <td className="flex justify-between">
-            <button className="btn btn-success" onClick={handleFinishOrder}>Finalizar pedido</button>
+            <button className="btn btn-success" onClick={() => handleFinishOrder(cartsushiCarritos)}>Finalizar pedido</button>
               {/* modal*/}
               <dialog id="my_modal_4" className="modal">
                 <div className="modal-box flex justify-center">
@@ -293,4 +325,3 @@ export const CartShopping = () => {
 </div>
   )
 }
-

@@ -36,6 +36,7 @@ const loginUser = async (email, pass, type) => {
     console.log('El usuario ha podido iniciar sesión exitosamente');
     
     const tokenPayload = {
+     // idregistro:usuario.idregistro,
       id_usuario: usuario.id_usuario,
       email: usuario.email,
       admin: usuario.admin,

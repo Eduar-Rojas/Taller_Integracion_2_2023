@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
+
 const Profile_Body = () => {
   const [userData, setUserData] = useState({ id_usuario: '', email: '' });
+  const [sushiList, setSushiList] = useState([]);
 
 
   const fetchUserData = async () => {
@@ -13,6 +16,7 @@ const Profile_Body = () => {
         }
       });
       setUserData(respuesta.data.usuario);
+      
     } catch (error) {
       console.error('Error al obtener datos del usuario:', error);
     }
@@ -81,10 +85,21 @@ const Profile_Body = () => {
     }
   };
 
-
-
-
-
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    axios.get("http://localhost:3000/api/mandar-carrito-compras/:id_usuario", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      setSushiList(response.data);
+    })
+    .catch((error) => {
+      console.error('Error al solicitar datos al api desde Frontend: ', error);
+    });
+   }, []);
+  
   return (
     <main>
       <div className="grid grid-cols-2 grid-rows-1 gap-4 justify-items-stretch mb-64">
@@ -102,24 +117,13 @@ const Profile_Body = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr className="hover">
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                </tr>
-                {/* row 2 */}
-                <tr className="hover">
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                </tr>
-                {/* row 3 */}
-                <tr className="hover">
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                </tr>
+              {sushiList.map((item, index) => (
+   <tr key={index}>
+     <td>{item.id_producto}</td>
+     <td>{item.nombrepro}</td>
+     <td>{item.precio}</td>
+   </tr>
+ ))}
               </tbody>
             </table>
           </div>

@@ -16,7 +16,8 @@ const VerificarToken = (req, res, next) => {   //
        // con la clave secreta "Secreto_XD", si es válido, este puede ser decodificado
   
       req.user = {
-        id_usuario: decodedToken.id_usuario,
+        idregistro:decodedToken.idregistro,
+        nombre_usuario: decodedToken.nombre_usuario,
         email: decodedToken.email,
         admin: decodedToken.admin,
         type: decodedToken.type,
