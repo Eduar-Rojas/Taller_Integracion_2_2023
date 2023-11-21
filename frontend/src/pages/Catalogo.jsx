@@ -31,7 +31,7 @@ function Catalogo() {
         </div>
       </div>
 
-      <div className="col-span-5 grid grid-cols-5 gap-4 pt-4">
+      <div className="col-span-5">
         <CardCatalogo/>
       </div>
 

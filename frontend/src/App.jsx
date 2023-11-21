@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Carro from "./pages/Carro";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { useAuth } from "./Components/useAuth";
+import AdminPedidos from './pages/AdminPedidos';
 
 function App() {
   const {isAuthenticated } = useAuth(); // Esto debería ser proporcionado por el contexto, no como una función
@@ -33,6 +34,7 @@ function App() {
           <Route path="/carro" element={<Carro />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/nosotros" element={<SobreNosotros />} />
+          <Route path="/AdminPedidos" element={<AdminPedidos />} />
 
           {/* Utilizar ProtectedRoute como contenedor para las rutas protegidas */}
           <Route path="/" element={<ProtectedRoute isAuthenticated={isAuthenticated} />}  >
@@ -43,5 +45,4 @@ function App() {
       </BrowserRouter>
   );
 }
-
 export default App;

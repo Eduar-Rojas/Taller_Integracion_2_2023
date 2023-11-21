@@ -8,13 +8,18 @@ const {VerificarToken} = require("./middleware/verifyToken");
 const { updateUserProfile}=require('./controller/updateprofile')
 const db = require('./db/db')
 const catalogoController = require('./controller/catalogo')
+const sushiBuildController = require('./controller/SushiBuild');
+
+
 
 // comando para instalar: npm install bcrypt
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 app.use('/api', catalogoController)
-//app.use('/api', sushiBuildController)
+app.use('/api', sushiBuildController)
+
+
 
 app.post('/register', async (req, res) => {
   try {
@@ -149,7 +154,78 @@ app.post('/actualizar-datos', VerificarToken, async (req, res) => {
   }
 });
 
-// ...
+
+
+app.post('/api/agregar-al-carrito', async (req, res) => {
+  try {
+    const { id_usuario, id_producto, cantidad} = req.body;
+
+    // Aquí ejecuta la consulta SQL para insertar el producto en la tabla del carrito
+    // Utiliza el id_usuario y id_producto recibidos para realizar la inserción
+
+        // Ejemplo de consulta (asegúrate de usar tu propio método para interactuar con la base de datos)
+        const productDetailsQuery = `SELECT nombre_producto, descripcion, precio FROM catalogo WHERE id_producto = $1`;
+        const productDetails = await db.one(productDetailsQuery, [id_producto]);
+    
+        // Obtener los detalles del producto
+        const { nombre_producto, descripcion, precio } = productDetails;
+
+    // Calcular el nuevo precio multiplicando la cantidad por el precio
+    const nuevoPrecio = cantidad * precio;
+
+    // Insertar el producto en la tabla "carrito_compras" con el nuevo precio
+    const insertQuery = `
+      INSERT INTO carrito_compras (id_usuario, id_producto, cantidad, nombrepro, descpro, precio)
+      VALUES ($1, $2, $3, $4, $5, $6)
+    `;
+    await db.none(insertQuery, [
+      id_usuario,
+      id_producto,
+      cantidad,
+      nombre_producto,
+      descripcion,
+      nuevoPrecio // Se guarda el nuevo precio calculado
+    ])
+
+    res.status(200).json({ message: 'Producto agregado al carrito correctamente' });
+    console.log('Producto agregado al carrito correctamente');
+  } catch (error) {
+    console.error('Error al agregar producto al carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor al agregar producto al carrito' });
+  }
+});
+
+
+app.get('/api/carrito-compras/:id_usuario', async (req, res) => {
+  try {
+    const { id_usuario } = req.params;
+    // Aquí realiza la consulta SQL para obtener los datos del carrito para el usuario dado
+    const carritoData = await db.any('SELECT * FROM carrito_compras WHERE id_usuario = $1', [id_usuario]);
+
+    res.status(200).json(carritoData);
+  } catch (error) {
+    console.error('Error al obtener datos del carrito:', error);
+    res.status(500).json({ error: 'Error al obtener datos del carrito' });
+  }
+});
+
+
+// Agrega esta ruta para eliminar un elemento del carrito por su ID
+app.delete('/api/carrito-compras/:id_carrito', async (req, res) => {
+  try {
+    const { id_carrito } = req.params;
+
+    // Realiza la consulta SQL para eliminar el elemento del carrito por su ID
+    await db.none('DELETE FROM carrito_compras WHERE id_carrito = $1', [id_carrito]);
+
+    res.status(200).json({ message: 'Elemento eliminado del carrito correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar elemento del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor al eliminar elemento del carrito' });
+  }
+});
+
+
 
   
 
