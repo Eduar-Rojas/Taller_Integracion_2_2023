@@ -10,7 +10,7 @@ export const CartShopping = () => {
   const [cartsushiCarritos, setCartsushiCarritos] = useState([]); // Define cartsushiCarritos en el estado local del componente
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
-
+  const [cartsushiPedidos, setsushiPedidos] = useState([]);
   const resetLoadingProgress = () => {
     setLoadingProgress(0);
   };
@@ -67,6 +67,33 @@ export const CartShopping = () => {
   }, []);
 
 
+  useEffect(() => {
+    // Obtener el token del localStorage
+    const token = localStorage.getItem("token");
+
+    // Verificar si el token existe
+    if (token) {
+      // Decodificar el token para obtener la información
+      const decodedToken = jwt_decode.jwtDecode(token);
+
+      // Extraer la ID de usuario del token decodificado
+      const userId = decodedToken.id_usuario;
+
+      // Realizar la solicitud al backend para obtener los datos del carrito
+      Axios.get(`http://localhost:3000/api/agregar-al-carrito-sushi/${userId}`)
+        .then((response) => {
+          setsushiPedidos(response.data);
+        })
+        .catch((error) => {
+          console.error('Error al obtener datos del carrito desde Frontend: ', error);
+        });
+    } else {
+      // Manejar el caso en el que el token no está presente en localStorage
+      console.error('No se encontró el token en localStorage');
+    }
+  }, []);
+
+
 
     // Define un estado llamado productCount para que se le sume o reste 1, estando inicializado en 0
   const [productCount, setProductCount] = useState(0);
@@ -93,6 +120,23 @@ export const CartShopping = () => {
   
       // Actualizar el estado local del carrito después de eliminarlo en la base de datos
       setCartsushiCarritos(updatedCart);
+    } catch (error) {
+      
+      console.error('Error al eliminar producto del carrito:', error);
+      
+    }
+  };
+
+  const removeFromCartPedidos = async (index) => {
+    try {
+      const updatedCart = [...cartsushiPedidos];
+      const removedItem = updatedCart.splice(index, 1)[0]; // Elimina el elemento del carrito local y lo guarda
+  
+      // Hacer una solicitud al backend para eliminar el elemento del carrito en la base de datos
+      await Axios.delete(`http://localhost:3000/api/agregar-al-carrito-sushi/${removedItem.id_pedido}`);
+  
+      // Actualizar el estado local del carrito después de eliminarlo en la base de datos
+      setsushiPedidos(updatedCart);
     } catch (error) {
       
       console.error('Error al eliminar producto del carrito:', error);
@@ -152,6 +196,50 @@ export const CartShopping = () => {
         </th>
         <th>
           <button className="btn btn-outline btn-error" onClick={() => removeFromCart(index)} >Eliminar</button>
+        </th>
+      </tr>
+      ))}
+
+      {/* Fila 2 */}
+      {cartsushiPedidos.map((sushiPedido, index) => (
+      <tr key={index} >
+        <td>
+          <div className="flex sushiCarritos-center space-x-3">
+              <div className="mask mask-squircle">
+                <img className='w-20 h-20' src={sushiPedido.img} alt="Product"/>
+              </div>
+            <div>
+              <div className="font-bold text-white">{sushiPedido.nombrepro}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+            {/* Botones para aumentar o disminuir la cantidad del pedido*/}
+            <button className="btn btn-sm text-white bg-black" onClick={decrementCount}> - </button>
+            {/* productCount muestra la cantidad actual de productos */}
+            <span className="mx-2 text-white font-bold p-2 rounded-lg"> {sushiPedido.cantidad} </span>
+            <button className="btn btn-sm text-white bg-black" onClick={incrementCount}> {console.log(incrementCount)} + </button>
+        </td>
+        <td className='text-white'>{sushiPedido.precio }</td>
+        {/* Apertura modal */}
+        <th>
+          <button className="btn btn-ghost btn-xs text-white" onClick={()=>document.getElementById('my_modal_3').showModal()}>Detalles del pedido</button>
+          <dialog id="my_modal_3" className="modal">
+            <div className="modal-box">
+                <form method="dialog">
+                {/* Este boton cierra el modal */}
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 className="font-bold text-lg text-center text-white">Sushi</h3>
+                <figure className="px-10 pt-10 text-center">
+                    <img src={sushiPedido.img} alt="Product" className="rounded-xl mx-auto" />
+                </figure>
+                <p className="py-4 text-white" style={{ textAlign: 'center' }} > {sushiPedido.descpedidos} </p>
+            </div>
+          </dialog>
+        </th>
+        <th>
+          <button className="btn btn-outline btn-error" onClick={() => removeFromCartPedidos(index)} >Eliminar</button>
         </th>
       </tr>
       ))}

@@ -225,6 +225,73 @@ app.delete('/api/carrito-compras/:id_carrito', async (req, res) => {
 });
 
 
+// -------------------------------------------------------------------------
+app.post('/api/agregar-al-carrito-sushi', async (req, res) => {
+  try {
+    const { id_usuario, wrap, protein, ingredient1, ingredient2 , img, cantidad} = req.body;
+
+    // Unir los valores de wrap, protein, ingredient1 e ingredient2 en la columna 'descpro'
+    const descpro = `${wrap}, ${protein}, ${ingredient1}, ${ingredient2}`;
+  
+
+    // Insertar en la tabla 'carrito_compras' con los datos recibidos y valores predeterminados
+    const insertQuery = `
+    INSERT INTO "carrito_pedidos" (id_usuario , nombrepro, descpedidos, precio, img, cantidad)
+    VALUES ($1, $2, $3, $4, $5, $6)
+  `;
+  
+
+    await db.none(insertQuery, [
+      id_usuario,
+      'SushiPersonalizado', // Valor predeterminado para el nombrepro
+      descpro, // La columna 'descpro' con los valores unidos
+      9900,
+      'zzz',
+      1,
+       // Valor predeterminado para el precio
+    ]);
+
+    res.status(200).json({ message: 'Pedido de sushi agregado al carrito correctamente' });
+    console.log('Pedido de sushi agregado al carrito correctamente');
+  } catch (error) {
+    console.error('Error al agregar pedido de sushi al carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor al agregar pedido de sushi al carrito' });
+  }
+});
+
+
+app.get('/api/agregar-al-carrito-sushi/:id_usuario', async (req, res) => {
+  try {
+    const { id_usuario } = req.params;
+    // Aquí realiza la consulta SQL para obtener los datos del carrito para el usuario dado
+    const carritoData = await db.any('SELECT * FROM carrito_pedidos WHERE id_usuario = $1', [id_usuario]);
+
+    res.status(200).json(carritoData);
+  } catch (error) {
+    console.error('Error al obtener datos del carrito:', error);
+    res.status(500).json({ error: 'Error al obtener datos del carrito' });
+  }
+});
+
+
+app.delete('/api/agregar-al-carrito-sushi/:id_pedido', async (req, res) => {
+  try {
+    const { id_pedido } = req.params;
+
+    // Realiza la consulta SQL para eliminar el elemento del carrito por su ID
+    await db.none('DELETE FROM carrito_pedidos WHERE id_pedido = $1', [id_pedido]);
+
+    res.status(200).json({ message: 'Elemento eliminado del carrito correctamente' });
+  } catch (error) {
+    console.error('XDDDD')
+    console.error('Error al eliminar elemento del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor al eliminar elemento del carrito' });
+  }
+});
+
+// --------------------------------------------------------------------------------------
+
+
 
   
 
@@ -233,3 +300,7 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor funcionando en el puerto ${port}`);
 });
+
+
+
+

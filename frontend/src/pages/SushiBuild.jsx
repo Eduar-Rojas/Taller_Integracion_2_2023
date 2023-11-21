@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
 import axios from 'axios';
+import * as jwt_decode from "jwt-decode";
 
 const SushiBuild = () => {
   const [temperature, setTemperature] = useState("");
@@ -43,6 +44,47 @@ const SushiBuild = () => {
   }, []);
 
   // Métodos
+
+  const addToCart = () => {
+    // Obtener el token del localStorage
+    const token = localStorage.getItem('token');
+  
+    // Verificar si el token existe en el localStorage
+    if (token) {
+      // Decodificar el token para obtener la información del usuario, en este caso, la id_usuario
+      const decodedToken = jwt_decode.jwtDecode(token);
+      const id_usuario = decodedToken.id_usuario; // Asumiendo que el token tiene la propiedad id_usuario
+  
+      // Aquí puedes reunir la información del pedido personalizado (temperature, wrap, protein, ingredient1, ingredient2)
+      const personalizedOrder = {
+        id_usuario, // Agregar la id_usuario al pedido
+        wrap,
+        protein,
+        ingredient1,
+        ingredient2,
+        // Otras propiedades necesarias para el pedido personalizado
+      };
+  
+      // Realizar una solicitud POST al backend para agregar el pedido al carrito
+      axios.post('http://localhost:3000/api/agregar-al-carrito-sushi', personalizedOrder)
+        .then(response => {
+          // Manejar la respuesta del servidor si es necesario
+          console.log(response.data);
+          // Puedes mostrar una notificación o realizar alguna acción adicional si es necesario
+        })
+        .catch(error => {
+          // Manejar cualquier error que ocurra al intentar agregar el pedido al carrito
+          console.error('Error al agregar pedido al carrito:', error);
+          // Puedes mostrar un mensaje de error al usuario si es necesario
+        });
+    } else {
+      // Manejar el caso en el que no haya un token en el localStorage
+      console.error('No se encontró un token en el localStorage');
+      // Puedes mostrar un mensaje al usuario indicando que necesita iniciar sesión
+    }
+  };
+
+
   const updateSummary = (category, value) => {
     // Verifica si ya hay una entrada para la categoría en el resumen
     const existingIndex = summary.findIndex(item => item.category === category);
@@ -279,7 +321,13 @@ const SushiBuild = () => {
 
         {/*Boton que comprueba si los datos están disponibles. */}
         <div>
-          <button className="btn btn-xs sm:btn-sm md:btn-md" onClick={validateAvailability}>Agregar</button>
+          <button 
+          className="btn btn-xs sm:btn-sm md:btn-md" 
+          onClick={() => {
+            validateAvailability(); // Primera función
+            addToCart(); // Segunda función
+          }}
+          >Agregar</button>
         </div>
       </div>
 
